@@ -1,0 +1,22 @@
+-- -----------------------------------------------------
+-- Table `Universidad`.`Departamento`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Universidad`.`Departamento` (
+  `ndepto` INT NOT NULL,
+  `nombre` VARCHAR(55) NOT NULL,
+  `clave_admin` VARCHAR(10) NOT NULL,
+  `fecha_inicio` DATE NOT NULL,
+  PRIMARY KEY (`ndepto`),
+  UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+INSERT INTO Departamento VALUES(180319, 'Arquitectura', NULL, NULL);
+INSERT INTO Profesor VALUES('L00248237','Jesús Gutiérrez Gómez', 'Venustiano Carranza #350', 50000, '1968-12-09','M',180307);
+INSERT INTO Grado VALUES('L00165787','Doctorado en Ciencias Computacionales','Universidad de Stanford');
+INSERT INTO Curso VALUES('DL3015','Diseño de Productos y Sistemas II',8,232405);
+INSERT INTO Imparte VALUES('L00248237','TC1018');
+INSERT INTO Alumno VALUES('A013632800', 'Luis Arturo Mendoza Reyes', 'Av. Tecnológico #790', '(722) 318-66-55', 'ARQ', 2011);
+INSERT INTO Toma VALUES('A0124675','TC1018');
+
+
