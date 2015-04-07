@@ -8,20 +8,20 @@ import java.util.StringTokenizer;
 import java.util.Date;
 
 @SuppressWarnings("serial")
-public class ImparteGUI extends JFrame implements ActionListener
+public class TomaGUI extends JFrame implements ActionListener
 {
-	private JTextField tfClaveProfesor, tfClaveCurso;
-	private JButton    bRegistrar, bConsultarProfesor, bConsultarCurso, bConsultar;
+	private JTextField tfMatricula, tfClaveCurso;
+	private JButton    bRegistrar, bConsultarAlumno, bConsultarCurso, bConsultar;
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
 	
-	private ImparteAD imparte = new ImparteAD(); 
+	private TomaAD toma = new TomaAD(); 
 
-	public ImparteGUI(){
-		super("Impartir Curso");
+	public TomaGUI(){
+		super("Inscribir Curso");
 		
 		//Inicializar los atributos
-		tfClaveProfesor 	= new JTextField();
+		tfMatricula 	= new JTextField();
 		tfClaveCurso   		= new JTextField();
 		taDatos    		= new JTextArea(15, 63);
 		p1  	   		= new JPanel();
@@ -30,27 +30,27 @@ public class ImparteGUI extends JFrame implements ActionListener
 		//Agregar los atributos a los paneles
 		p1.setLayout(new GridLayout(4, 2));
 		
-		p1.add(new JLabel("Clave del Profesor"));
-		p1.add(tfClaveProfesor);
+		p1.add(new JLabel("Matrícula del Alumno"));
+		p1.add(tfMatricula);
 
 		p1.add(new JLabel("Clave del Curso"));
 		p1.add(tfClaveCurso);
 
-		bRegistrar = new JButton("Dar de Alta al Curso");
+		bRegistrar = new JButton("Inscribir Curso");
 		bRegistrar.addActionListener(this);
 		p1.add(bRegistrar);
 		
-		bConsultarProfesor = new JButton("Consultar los Cursos de un Profesor");
-		bConsultarProfesor.addActionListener(this);
+		bConsultarAlumno = new JButton("Consultar los Cursos de un Alumno");
+		bConsultarAlumno.addActionListener(this);
 		
-		bConsultarCurso = new JButton("Consultar Profesores que Imparten un Curso");
+		bConsultarCurso = new JButton("Consultar Alumnos que Toman un Curso");
 		bConsultarCurso.addActionListener(this);
 		
 		bConsultar = new JButton("Consultar Cursos Inscritos");
 		bConsultar.addActionListener(this);
 
 		p1.add(bConsultar);
-		p1.add(bConsultarProfesor);
+		p1.add(bConsultarAlumno);
 		p1.add(bConsultarCurso);
 		p2.setLayout(new FlowLayout());
 		
@@ -68,15 +68,15 @@ public class ImparteGUI extends JFrame implements ActionListener
 	}
 
 	public void clearFields(){
-		tfClaveProfesor.setText("");
+		tfMatricula.setText("");
 		tfClaveCurso.setText("");
 	}
 	
 	public void habilitarBotones(boolean value){
 		bRegistrar.setEnabled(value); 
-		bConsultarProfesor.setEnabled(value);
+		bConsultarAlumno.setEnabled(value);
 						
-		tfClaveProfesor.setEnabled(value);
+		tfMatricula.setEnabled(value);
 		tfClaveCurso.setEnabled(value);
 	}
 	
@@ -86,7 +86,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 		String claveProfesor = st.nextToken();
 		String claveCurso = st.nextToken();
 					
-		tfClaveProfesor.setText(claveProfesor);
+		tfMatricula.setText(claveProfesor);
 		tfClaveCurso.setText(claveCurso);
 	}
 		
@@ -114,13 +114,13 @@ public class ImparteGUI extends JFrame implements ActionListener
 	private String consultar(String elemento){
 		String resultado = "";
 		
-		if (elemento.equals("PROFESOR")){
-			String profesor = tfClaveProfesor.getText();
+		if (elemento.equals("ALUMNO")){
+			String alumno = tfMatricula.getText();
 			
-			if(profesor.equals(""))
-					resultado = "PROFESOR_VACIO";
+			if(alumno.equals(""))
+					resultado = "ALUMNO_VACIO";
 			else
-				resultado = imparte.consultarPor("PROFESOR", profesor);
+				resultado = toma.consultarPor("ALUMNO", alumno);
 		}
 		
 		if (elemento.equals("CURSO")){
@@ -129,7 +129,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 			if(curso.equals(""))
 					resultado = "CURSO_VACIO";
 			else
-				resultado = imparte.consultarPor("CURSO", curso);
+				resultado = toma.consultarPor("CURSO", curso);
 		}
 
 		return resultado;
@@ -138,7 +138,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 	private String obtenerDatos(){
 		boolean token = false;
 		
-		String claveProfesor  = tfClaveProfesor.getText();
+		String claveProfesor  = tfMatricula.getText();
 		String claveCurso     = tfClaveCurso.getText();
 
         String datos = "";
@@ -148,7 +148,7 @@ public class ImparteGUI extends JFrame implements ActionListener
         else
         { 		
     		// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
-			token = notTokenizer(claveProfesor); //Clave Profesor
+			token = notTokenizer(claveProfesor); //Clave ALUMNO
 		    if(token == false)
 			  token = notTokenizer(claveCurso); //Clave Curso
 	       	
@@ -164,10 +164,10 @@ public class ImparteGUI extends JFrame implements ActionListener
 	
 	private void print(String str){
 		
-		if(str.equals("PROFESOR_VACIO")||(str.equals("CURSO_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")) || (str.equals("CURSO_DUPLICADO"))|| (str.equals("PROFESOR_NO_ENCONTRADO"))|| (str.equals("CURSO_NO_ENCONTRADO")))
+		if(str.equals("ALUMNO_VACIO")||(str.equals("CURSO_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")) || (str.equals("CURSO_DUPLICADO"))|| (str.equals("ALUMNO_NO_ENCONTRADO"))|| (str.equals("CURSO_NO_ENCONTRADO")))
 		{
-			if(str.equals("PROFESOR_VACIO"))
-				taDatos.setText("El campo 'Clave Profesor' se encuentra vacío.");
+			if(str.equals("ALUMNO_VACIO"))
+				taDatos.setText("El campo 'Matrícula' se encuentra vacío.");
 				
 			if(str.equals("CURSO_VACIO"))
 				taDatos.setText("El campo 'Clave Curso' se encuentra vacío.");
@@ -175,8 +175,8 @@ public class ImparteGUI extends JFrame implements ActionListener
 			if(str.equals("CLAVE_CURSO_NO_ENCONTRADA"))
 				taDatos.setText("La Clave del Curso '" + tfClaveCurso.getText() + "' no se encontró en la base de datos.");
 
-			if(str.equals("CLAVE_PROFESOR_NO_ENCONTRADA"))
-				taDatos.setText("La Clave del Profesor '" + tfClaveCurso.getText() + "' no se encontró en la base de datos.");
+			if(str.equals("CLAVE_ALUMNO_NO_ENCONTRADA"))
+				taDatos.setText("La Clave del Alumno '" + tfClaveCurso.getText() + "' no se encontró en la base de datos.");
 				
 			if(str.equals("CAMPO_VACIO"))
 				taDatos.setText("Todos los campos deben contener datos.");
@@ -185,14 +185,14 @@ public class ImparteGUI extends JFrame implements ActionListener
 				taDatos.setText("Los datos que se capturan no pueden contener un '_'");
 			
 			if(str.equals("CURSO_DUPLICADO"))
-				taDatos.setText("El Profesor '" + tfClaveProfesor.getText() + "' ya imparte el curso" + tfClaveCurso.getText() + ". \nPor favor introduce otro Profesor u otro Curso.");
+				taDatos.setText("El Alumno '" + tfMatricula.getText() + "' ya toma el curso " + tfClaveCurso.getText() + ". \nPor favor introduce otro Alumno u otro Curso.");
 				
 			if(str.equals("CURSO_NO_REGISTRADO"))
-				taDatos.setText("El Profesor '" + tfClaveProfesor.getText() + "' o el curso '" + tfClaveCurso.getText() + "' no están registrados en la base de datos.\nPor favor introduce nuevos datos válidos." );
+				taDatos.setText("El Alumno '" + tfMatricula.getText() + "' o el curso '" + tfClaveCurso.getText() + "' no están registrados en la base de datos.\nPor favor introduce nuevos datos válidos." );
 				
 							
-			if(str.equals("PROFESOR_NO_ENCONTRADO"))
-				taDatos.setText("No se tienen cursos registrados para el profesor '" + tfClaveProfesor.getText() + "'.");
+			if(str.equals("ALUMNO_NO_ENCONTRADO"))
+				taDatos.setText("No se tienen cursos registrados para el Alumno '" + tfMatricula.getText() + "'.");
 				
 											
 			if(str.equals("CURSO_NO_ENCONTRADO"))
@@ -223,7 +223,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 			else
 			{
 				//3) Enviar los datos a la clase AD a través del metodo registrarCurso()
-			    resultado = imparte.imparteCurso(datos);
+			    resultado = toma.imparteCurso(datos);
 	
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
@@ -235,12 +235,12 @@ public class ImparteGUI extends JFrame implements ActionListener
 		}
 		
 		 if (e.getSource() == bConsultar){	
-		 	String datos = imparte.consultarCursos();
+		 	String datos = toma.consultarCursos();
 		 	print(datos);
 		 }
 
-		 if (e.getSource() == bConsultarProfesor){
-		 	String resultado = consultar("PROFESOR");
+		 if (e.getSource() == bConsultarAlumno){
+		 	String resultado = consultar("ALUMNO");
 	 		print(resultado);
 		 }	
 		 
@@ -251,6 +251,6 @@ public class ImparteGUI extends JFrame implements ActionListener
 	}
 
 	public static void main(String args[]){
-		new ImparteGUI();
+		new TomaGUI();
 	}
 }

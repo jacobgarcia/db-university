@@ -1,30 +1,30 @@
 import java.util.*;
 
-public class ImparteDP
+public class TomaDP
 {
-	private String claveProfesor;
+	private String matricula;
 	private String claveCurso;
 
 	//Constructors
-	public ImparteDP()
+	public TomaDP()
 	{
-		this.claveProfesor = "";
+		this.matricula = "";
 		this.claveCurso    = "";
 	}
 
 	//String Tokenizer
-	public ImparteDP(String datos)
+	public TomaDP(String datos)
 	{
 		StringTokenizer st = new StringTokenizer(datos, "_");
 
-			this.claveProfesor = st.nextToken();
+			this.matricula = st.nextToken();
 			this.claveCurso    = st.nextToken();
 	}
 
 	//Accessors (Getters)
-	public String getClaveProfesor()
+	public String getMatricula()
 	{
-		return this.claveProfesor;
+		return this.matricula;
 	}
 
 	public String getClaveCurso()
@@ -35,9 +35,9 @@ public class ImparteDP
 
 	//Mutators (Setters)
 
-	public void setClaveProfesor(String claveProfesor)
+	public void setMatricula(String matricula)
 	{
-		this.claveProfesor = claveProfesor;
+		this.matricula = matricula;
 	}
 
 	public void setClaveCurso(String claveCurso)
@@ -49,10 +49,10 @@ public class ImparteDP
 
 	public String toString()
 	{
-		return this.claveProfesor+"_"+this.claveCurso; 
+		return this.matricula+"_"+this.claveCurso; 
 	}
 
 	public String toSQLString(){
-		return "'" + this.claveProfesor + "','" + this.claveCurso+"'"; 
+		return "'" + this.matricula + "','" + this.claveCurso+"'"; 
 	}
 }

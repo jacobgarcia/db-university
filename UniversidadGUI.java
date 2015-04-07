@@ -29,6 +29,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 	private ProfesoresGUI profesor = new ProfesoresGUI();
 	private AlumnosGUI alumno = new AlumnosGUI();
 	private ImparteGUI imparte = new ImparteGUI();
+	private TomaGUI toma = new TomaGUI();
 	
 	public UniversidadGUI()
 	{
@@ -47,7 +48,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		miAsignar = new JMenuItem("Asignación de Cursos");
 		miAsignar.addActionListener(this);
 					
-		
+	
 		
 		mDepartamentos = new JMenu("Departamentos");
 		miRegistroDepartamento = new JMenuItem("Registro de Departamentos");
@@ -68,6 +69,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		miRegistroCurso = new JMenuItem("Registro de Cursos");
 		miRegistroCurso.addActionListener(this);
 		
+		
 		//Panel
 		panel = new JPanel();
 		
@@ -80,6 +82,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		
 		mProfesores.add(miRegistroProfesor);
 		mProfesores.add(miFormacion);
+		mProfesores.add(miAsignar);
 		
 		mCursos.add(miRegistroCurso);
 
@@ -164,6 +167,18 @@ public class UniversidadGUI extends JFrame implements ActionListener
 				panel.setVisible(false);
 			}
 			panel = imparte.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+		
+		if(event.getSource() == miInscripcion)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = toma.getPanel2();
 			panel.setVisible(true);
 			add(panel);
 			setVisible(true);

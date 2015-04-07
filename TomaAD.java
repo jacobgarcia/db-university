@@ -4,20 +4,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ImparteAD{
+public class TomaAD{
 
 	private Connection conexion = UniversidadAD.conexion;
     private Statement statement;
-	private ImparteDP imparteDP;
+	private TomaDP TomaDP;
 
 	public String imparteCurso(String datos){
 		String insertImparte="";
 		String respuesta = "";
 
-		imparteDP = new ImparteDP(datos);
+		TomaDP = new TomaDP(datos);
 
 		/*Crear String con instrucción SQL*/
-		insertImparte = "INSERT INTO Imparte VALUES(" + imparteDP.toSQLString() + ");";
+		insertImparte = "INSERT INTO Toma VALUES(" + TomaDP.toSQLString() + ");";
 
 		try{
 
@@ -48,9 +48,9 @@ public class ImparteAD{
         String query = "";
         String respuesta = "";
         
-        query = "SELECT * FROM Imparte";
+        query = "SELECT * FROM Toma";
         
-        imparteDP = new ImparteDP();
+        TomaDP = new TomaDP();
 
         try{
             //1) Abrir la base de datos Universidad
@@ -60,10 +60,10 @@ public class ImparteAD{
             result = statement.executeQuery(query);
             
             while(result.next()){
-                imparteDP.setClaveProfesor(result.getString(1));
-                imparteDP.setClaveCurso(result.getString(2));
+                TomaDP.setMatricula(result.getString(1));
+                TomaDP.setClaveCurso(result.getString(2));
                 
-                respuesta = respuesta + imparteDP.toString() + "\n";
+                respuesta = respuesta + TomaDP.toString() + "\n";
             }
             
             if(respuesta.equals(""))
@@ -86,13 +86,13 @@ public class ImparteAD{
 	        String query = "";
 	        String respuesta = "";
 	        
-	        if (tipoConsulta.equals("PROFESOR"))
-	        	query = "SELECT * FROM Imparte WHERE clave_profesor = '" + str.toString() + "'";
+	        if (tipoConsulta.equals("ALUMNO"))
+	        	query = "SELECT * FROM Toma WHERE matricula = '" + str.toString() + "'";
 	        	
 	        if (tipoConsulta.equals("CURSO"))
-	        	query = "SELECT * FROM Imparte WHERE clave_curso = '" + str.toString() + "'";
+	        	query = "SELECT * FROM Toma WHERE clave_curso = '" + str.toString() + "'";
 	        
-	        imparteDP = new ImparteDP();
+	        TomaDP = new TomaDP();
 	        
 	        try{
 	            
@@ -103,15 +103,15 @@ public class ImparteAD{
 	            result = statement.executeQuery(query);
 	            
 	            while(result.next()){
-                imparteDP.setClaveProfesor(result.getString(1));
-                imparteDP.setClaveCurso(result.getString(2));
+                TomaDP.setMatricula(result.getString(1));
+                TomaDP.setClaveCurso(result.getString(2));
                 
-                respuesta = respuesta + imparteDP.toString() + "\n";
+                respuesta = respuesta + TomaDP.toString() + "\n";
 	            }
 	            
 	            if(respuesta == ""){
-	            	if (tipoConsulta.equals("PROFESOR"))
-		          		respuesta = "PROFESOR_NO_ENCONTRADO";
+	            	if (tipoConsulta.equals("ALUMNO"))
+		          		respuesta = "ALUMNO_NO_ENCONTRADO";
 		          		
 		          	if (tipoConsulta.equals("CURSO"))
 		          		respuesta = "CURSO_NO_ENCONTRADO";
