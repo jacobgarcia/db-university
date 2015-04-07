@@ -65,7 +65,7 @@ public class AlumnosAD{
                 alumnosDP.setDomicilio(result.getString(3));
                 alumnosDP.setTelefono(result.getString(4));
                 alumnosDP.setCarrera(result.getString(5));
-                alumnosDP.setPlan(result.getString(6));
+                alumnosDP.setPlan(result.getInt(6));
                 
                 respuesta = respuesta + alumnosDP.toString() + "\n";
             }
@@ -112,7 +112,7 @@ public class AlumnosAD{
                 alumnosDP.setDomicilio(result.getString(3));
                 alumnosDP.setTelefono(result.getString(4));
                 alumnosDP.setCarrera(result.getString(5));
-                alumnosDP.setPlan(result.getString(6));
+                alumnosDP.setPlan(result.getInt(6));
                 
                 respuesta = respuesta + alumnosDP.toString() + "\n";
                 }

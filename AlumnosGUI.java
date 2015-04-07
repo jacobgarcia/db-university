@@ -135,6 +135,7 @@ public class AlumnosGUI extends JFrame implements ActionListener
 
 	private String obtenerDatos(){
 		boolean token = false;
+		int nplan;
 				
         String matricula = tfMatricula.getText();
 		String nombre    = tfNombre.getText();
@@ -150,23 +151,33 @@ public class AlumnosGUI extends JFrame implements ActionListener
         {
         	try
         	{
-    			// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
-			    token = notTokenizer(matricula); //Matricula
-			    if(token == false)
-			    {
-			    	token = notTokenizer(nombre); //Nombre
-			     	if(token == false){
-				     	token = notTokenizer(domicilio); // Domicilio
-				    	if(token == false){				    	
-				     		token = notTokenizer(telefono); // Teléfono
-				     		if(token == false){				     			
-				     			token = notTokenizer(carrera); // Carrera
-				     			if(token == false)
-				     				token = notTokenizer(plan); // Plan
-				     		}
-				    	}
-			     	}
-		    	}
+        		// Comprobar que el campo "Plan" sea numérico
+        		nplan = Integer.parseInt(plan);
+
+        		//Comprobar que el campo "Plan" sea positivo
+        		if(nplan <0)
+        			datos = "NEGATIVO";
+        		else
+        		{
+	    			// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
+				    token = notTokenizer(matricula); //Matricula
+				    if(token == false)
+				    {
+				    	token = notTokenizer(nombre); //Nombre
+				     	if(token == false){
+					     	token = notTokenizer(domicilio); // Domicilio
+					    	if(token == false){				    	
+					     		token = notTokenizer(telefono); // Teléfono
+					     		if(token == false){				     			
+					     			token = notTokenizer(carrera); // Carrera
+					     			if(token == false)
+					     				token = notTokenizer(plan); // Plan
+					     		}
+					    	}
+				     	}
+			    	}
+        			
+        		}
 		    	 
 		     	if(token == false)
 		    		datos = matricula+"_"+nombre+"_"+domicilio+"_"+telefono+"_"+carrera+"_"+plan;

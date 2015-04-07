@@ -7,7 +7,7 @@ public class AlumnosDP
 	private String domicilio;
 	private String telefono;
 	private String carrera;
-	private String plan;
+	private int plan;
 
 	//Constructors
 	public AlumnosDP()
@@ -17,7 +17,7 @@ public class AlumnosDP
 		this.domicilio = "";
 		this.telefono  = "";
 		this.carrera   = "";
-		this.plan      = "";
+		this.plan      = 0;
 	}
 
 	//String Tokenizer
@@ -30,7 +30,7 @@ public class AlumnosDP
 			this.domicilio = st.nextToken();
 			this.telefono  = st.nextToken();
 			this.carrera   = st.nextToken();
-			this.plan      = st.nextToken();
+			this.plan      = Integer.parseInt(st.nextToken());
 	}
 
 	//Accessors (Getters)
@@ -59,7 +59,7 @@ public class AlumnosDP
 		return this.carrera;
 	}
 
-	public String getPlan()
+	public int getPlan()
 	{
 		return this.plan;
 	}
@@ -91,7 +91,7 @@ public class AlumnosDP
 		this.carrera = carrera;
 	}
 
-	public void setPlan(String plan)
+	public void setPlan(int plan)
 	{
 		this.plan = plan;
 	}
@@ -105,7 +105,7 @@ public class AlumnosDP
 	}
 
 	public String toSQLString(){
-		return "'" + this.matricula + "','" + this.nombre + "','" + this.domicilio + "','" + this.telefono + "','" + this.carrera + "','" + this.plan + "'";
+		return "'" + this.matricula + "','" + this.nombre + "','" + this.domicilio + "','" + this.telefono + "','" + this.carrera + "'," + this.plan + "";
 	}
 
 }
