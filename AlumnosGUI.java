@@ -10,7 +10,7 @@ import java.util.Date;
 public class AlumnosGUI extends JFrame implements ActionListener
 {
 	private JTextField tfMatricula, tfNombre, tfDomicilio, tfTelefono, tfCarrera, tfPlan;
-	private JButton    bRegistrar, bConsultar;
+	private JButton    bRegistrar, bConsultar, bConsultarMatricula, bConsultarCarrera;
 	private JTextArea  taDatos;
 	public JPanel      p1,p2;
 
@@ -58,6 +58,14 @@ public class AlumnosGUI extends JFrame implements ActionListener
 		bConsultar = new JButton("Consultar Alumnos");
 		bConsultar.addActionListener(this);
 		p1.add(bConsultar);
+
+		bConsultarMatricula = new JButton("Consultar Matricula");
+		bConsultarMatricula.addActionListener(this);
+		p1.add(bConsultarMatricula);
+
+		bConsultarCarrera = new JButton("Consultar Carrera");
+		bConsultarCarrera.addActionListener(this);
+		p1.add(bConsultarCarrera);
 		
 		p2.setLayout(new FlowLayout());
 
@@ -127,7 +135,6 @@ public class AlumnosGUI extends JFrame implements ActionListener
 
 	private String obtenerDatos(){
 		boolean token = false;
-		int nTelefono;
 				
         String matricula = tfMatricula.getText();
 		String nombre    = tfNombre.getText();
@@ -176,12 +183,39 @@ public class AlumnosGUI extends JFrame implements ActionListener
         return datos;
 	}
 
+	private String consultar(String elemento){
+		String resultado = "";
+	
+		if(elemento.equals("ALUMNO")){
+			String matricula = tfMatricula.getText();
+
+			if(matricula.equals(""))
+					resultado = "ALUMNO_VACIO";
+			else
+				resultado = alumnos.consultarPor("ALUMNO", matricula);
+		}
+		
+		if(elemento.equals("CARRERA")){
+			String carrera = tfCarrera.getText();
+
+			if(carrera.equals(""))
+					resultado = "CARRERA_VACIO";
+			else
+				resultado = alumnos.consultarPor("CARRERA", carrera);
+		}
+		
+		return resultado;
+	}
+
 	private void print(String str){
 		
-		if((str.equals("ALUMNO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("ALUMNO_VACIO")) || (str.equals("ALUMNO_DUPLICADO")))
+		if((str.equals("ALUMNO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("ALUMNO_VACIO")) || (str.equals("ALUMNO_DUPLICADO")) || (str.equals("CARRERA_VACIO")) || (str.equals("CARRERA_NO_REGISTRADO")))
 		{	
 			if(str.equals("ALUMNO_NO_ENCONTRADO"))
 				taDatos.setText("La clave de alumno '" + tfMatricula.getText() + "' no se encontró en la base de datos.");
+
+			if(str.equals("CARRERA_NO_REGISTRADO"))
+				taDatos.setText("La carrera '" + tfCarrera.getText() + "' no se encontró en la base de datos.");
 				
 			if(str.equals("CAMPO_VACIO"))
 				taDatos.setText("Todos los campos deben contener datos.");
@@ -191,6 +225,9 @@ public class AlumnosGUI extends JFrame implements ActionListener
 			
 			if(str.equals("ALUMNO_VACIO"))
 				taDatos.setText("El campo 'Matricula' se encuentra vacío.");
+
+			if(str.equals("CARRERA_VACIO"))
+				taDatos.setText("El campo 'Carrera' se encuentra vacío.");
 			
 			if(str.equals("ALUMNO_DUPLICADO"))
 				taDatos.setText("El alumno con clave '" + tfMatricula.getText() + "' ya se encuentra registrado. \nPor favor introduce una matrícula válida distinta.");
@@ -230,6 +267,27 @@ public class AlumnosGUI extends JFrame implements ActionListener
 						clearFields();	
 				}
 		}
+
+		if (e.getSource() == bConsultar){	
+			String datos = alumnos.consultarAlumnos();
+			print(datos);
+		}
+
+		if (e.getSource() == bConsultarMatricula){
+			String resultado = consultar("ALUMNO");
+			if(resultado.equals("ALUMNO_VACIO")||(resultado.equals("ERROR"))||(resultado.equals("ALUMNO_NO_ENCONTRADO")))
+				print(resultado);
+			else {
+				//Colocar los datos en los TextFields
+				mostrar(resultado);	
+				print(resultado);
+			}		
+		}
+
+		if (e.getSource() == bConsultarCarrera){	
+				String resultado = consultar("CARRERA");
+				print(resultado);
+			}
 	}
 
 }

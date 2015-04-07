@@ -105,10 +105,7 @@ public class AlumnosDP
 	}
 
 	public String toSQLString(){
-		return "" + this.matricula + ",'" + this.nombre + "','" + this.domicilio + "','" + this.telefono + "','" + this.carrera + "','" + this.plan+"'";
+		return "'" + this.matricula + "','" + this.nombre + "','" + this.domicilio + "','" + this.telefono + "','" + this.carrera + "','" + this.plan + "'";
 	}
-
-
-
 
 }
