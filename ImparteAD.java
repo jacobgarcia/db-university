@@ -17,7 +17,7 @@ public class ImparteAD{
 		imparteDP = new ImparteDP(datos);
 
 		/*Crear String con instrucción SQL*/
-		insertImparte = "INSERT INTO Toma VALUES("+imparteDP.toSQLString()+");";
+		insertImparte = "INSERT INTO Imparte VALUES("+imparteDP.toSQLString()+");";
 
 		try{
 
@@ -30,9 +30,15 @@ public class ImparteAD{
 			//3) Cerrar la base de datos Banco
 			statement.close();
 
+			respuesta = "Datos: " + datos;
+            System.out.println(conexion.nativeSQL(insertImparte));
 		}
 		catch(SQLException sqle){
-			System.out.println("Error: "+sqle);
+			System.out.println("Error: " + sqle);
+            	if(sqle.getErrorCode() == 1452)
+            		respuesta = "CURSO_NO_REGISTRADO";
+            	else
+            		respuesta = "PROFESOR_DUPLICADO";
 		}
 		return respuesta;
 	}

@@ -11,7 +11,7 @@ import java.util.Date;
 public class ImparteGUI extends JFrame implements ActionListener
 {
 	private JTextField tfClaveProfesor, tfClaveCurso;
-	private JButton    bRegistrar, bEliminar;1
+	private JButton    bRegistrar, bEliminar;
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
 	
@@ -108,6 +108,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 		
 		String claveProfesor  = tfClaveProfesor.getText();
 		String claveCurso     = tfClaveCurso.getText();
+
         String datos = "";
 		
 		if(claveProfesor.equals("")||claveCurso.equals(""))
@@ -118,14 +119,11 @@ public class ImparteGUI extends JFrame implements ActionListener
         	{
         		      		
     			// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
-			     token = notTokenizer(claveProfesor); //Clave
+			     token = notTokenizer(claveProfesor); //Clave Profesor
 			     if(token == false)
 			     {
-			     	token = notTokenizer(claveCurso); //Nombre
+			     	token = notTokenizer(claveCurso); //Clave Curso
 	        	 }
-	        	 
-	         	 if(token == false)
-	        		 datos = claveProfesor+"_"+claveCurso;
 	       	     else
 	        		 datos = "TOKEN";
 	        	
@@ -139,52 +137,22 @@ public class ImparteGUI extends JFrame implements ActionListener
     
         return datos;
 	}
-
-	private String consultar(String elemento){
-		String resultado = "";
-		
-		if (elemento.equals("SEMESTRE")){
-			String semestre = tfSemestre.getText();
-			
-			if(semestre.equals(""))
-					resultado = "SEMESTRE_VACIO";
-			else
-				resultado = imparte.consultarPor("SEMESTRE", semestre);
-		}
-		
-		if (elemento.equals("DEPARTAMENTO")){
-			String claveCurso = tfNumeroDepto.getText();
-			
-			if(claveCurso.equals(""))
-					resultado = "DEPARTAMENTO_VACIO";
-			else
-				resultado = imparte.consultarPor("DEPARTAMENTO", claveCurso);
-		}
-	
-		if(elemento.equals("CLAVE")){
-			String claveProfesor = tfClaveProfesor.getText();
-
-			if(claveProfesor.equals(""))
-					resultado = "CLAVE_VACIA";
-			else
-				resultado = imparte.consultarPor("CLAVE", claveProfesor);
-		}
-
-		return resultado;
-	}
 	
 	private void print(String str){
 		
-		if(str.equals("DEPARTAMENTO_VACIO")||(str.equals("SEMESTRE_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")))
+		if(str.equals("PROFESOR_VACIO")||(str.equals("CURSO_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")))
 		{
-			if(str.equals("DEPARTAMENTO_VACIO"))
-				taDatos.setText("El campo 'Número de Departamento' se encuentra vacío.");
+			if(str.equals("PROFESOR_VACIO"))
+				taDatos.setText("El campo 'Clave Profesor' se encuentra vacío.");
 				
-			if(str.equals("SEMESTRE_VACIO"))
-				taDatos.setText("El campo 'Semestre' se encuentra vacío.");
+			if(str.equals("CURSO_VACIO"))
+				taDatos.setText("El campo 'Clave Curso' se encuentra vacío.");
 				
-			if(str.equals("CLAVE_NO_ENCONTRADA"))
-				taDatos.setText("El curso '" + tfClaveProfesor.getText() + "' no se encontró en la base de datos.");
+			if(str.equals("CLAVE_CURSO_NO_ENCONTRADA"))
+				taDatos.setText("La Clave del Curso '" + tfClaveCurso.getText() + "' no se encontró en la base de datos.");
+
+			if(str.equals("CLAVE_PROFESOR_NO_ENCONTRADA"))
+				taDatos.setText("La Clave del Profesor '" + tfClaveCurso.getText() + "' no se encontró en la base de datos.");
 				
 			if(str.equals("CAMPO_VACIO"))
 				taDatos.setText("Todos los campos deben contener datos.");
@@ -192,27 +160,8 @@ public class ImparteGUI extends JFrame implements ActionListener
 			if(str.equals("TOKEN"))
 				taDatos.setText("Los datos que se capturan no pueden contener un '_'");
 			
-			if(str.equals("NO_NUMERICO") || str.equals("NEGATIVO"))
-				taDatos.setText("Los campos 'Número de Departamento' y 'Semestre' deben contener valores numéricos enteros positivos.");
-			
-			if(str.equals("CLAVE_VACIA"))
-				taDatos.setText("El campo 'Clave' se encuentra vacío.");
-			
-			if(str.equals("CLAVE_DUPLICADA"))
-				taDatos.setText("El curso '" + tfClaveProfesor.getText() + "' ya se encuentra en la base de datos. \nPor favor introduce otra claveProfesor de curso.");
-			
-			if(str.equals("SEMESTRE_NO_REGISTRADO"))
-				taDatos.setText("No se tienen imparte registrados para el semestre '" + tfSemestre.getText() + "'.");
-				
-			if(str.equals("CURSO_NO_REGISTRADO"))
-				taDatos.setText("El número de departamento '" + tfNumeroDepto.getText() + "' no se encuentra en la base de datos. \nPor favor introduce un Departamento con un número válido.");
-				
-			if(str.equals("DEPARTAMENTO_NO_ENCONTRADO"))
-				taDatos.setText("No se tienen imparte registrados con el departamento '" + tfNumeroDepto.getText() + "'.");
-				
-			if(str.equals("CLAVE_NO_REGISTRADA"))
-				taDatos.setText("No se tiene ningún curso registrado bajo la claveProfesor '" + tfClaveProfesor.getText() + "'.");
-				
+			if(str.equals("IMPARTE_DUPLICADA"))
+				taDatos.setText("El Profesor '" + tfClaveProfesor.getText() + "' ya se imparte ese curso. \nPor favor introduce otra clave de Profesor o clave de curso.");				
 		}
 		else
 			taDatos.setText(str);
@@ -244,38 +193,27 @@ public class ImparteGUI extends JFrame implements ActionListener
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
 			    
-			    if(!resultado.equals("CLAVE_DUPLICADA"))
+			    if(!resultado.equals("IMPARTE_DUPLICADA"))
 			    	//5) Quitar la información de los TextFields
 			    	clearFields();	
 			}
 		}
 		
-		if (e.getSource() == bConsultar){	
-			String datos = imparte.consultarCursos();
-			print(datos);
-		}
+		// if (e.getSource() == bConsultar){	
+		// 	String datos = imparte.consultarCursos();
+		// 	print(datos);
+		// }
 
-		if (e.getSource() == bConsultarClave){
-			String resultado = consultar("CLAVE");
-			if(resultado.equals("CLAVE_VACIA")||(resultado.equals("ERROR"))||(resultado.equals("CLAVE_NO_REGISTRADA")))
-				print(resultado);
-			else{
-				//Colocar los datos en los TextFields
-				mostrar(resultado);	
-				print(resultado);
-			}	
-		}
-		
-		if (e.getSource() == bConsultarSemestre){	
-			String resultado = consultar("SEMESTRE");
-			print(resultado);
-		}
-		
-		if (e.getSource() == bConsultarDepartamento){	
-			String resultado = consultar("DEPARTAMENTO");
-			print(resultado);
-		}
-				
+		// if (e.getSource() == bConsultarClave){
+		// 	String resultado = consultar("CLAVE");
+		// 	if(resultado.equals("CLAVE_VACIA")||(resultado.equals("ERROR"))||(resultado.equals("CLAVE_NO_REGISTRADA")))
+		// 		print(resultado);
+		// 	else{
+		// 		//Colocar los datos en los TextFields
+		// 		mostrar(resultado);	
+		// 		print(resultado);
+		// 	}	
+		// }				
 	}
 
 	public static void main(String args[]){

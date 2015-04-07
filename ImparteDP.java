@@ -8,8 +8,8 @@ public class ImparteDP
 	//Constructors
 	public ImparteDP()
 	{
-		this.claveProfesor              = "";
-		this.claveCurso              = "";
+		this.claveProfesor = "";
+		this.claveCurso    = "";
 	}
 
 	//String Tokenizer
@@ -17,8 +17,8 @@ public class ImparteDP
 	{
 		StringTokenizer st = new StringTokenizer(datos, "_");
 
-			this.claveProfesor              = st.nextToken();
-			this.claveCurso              = st.nextToken();
+			this.claveProfesor = st.nextToken();
+			this.claveCurso    = st.nextToken();
 	}
 
 	//Accessors (Getters)
@@ -55,8 +55,4 @@ public class ImparteDP
 	public String toSQLString(){
 		return "" + this.claveProfesor + ",'" + this.claveCurso+"'"; 
 	}
-
-
-
-
 }
