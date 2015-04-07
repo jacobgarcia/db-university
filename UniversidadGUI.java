@@ -28,6 +28,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 	private CursosIUG cursos = new CursosIUG();
 	private ProfesoresGUI profesor = new ProfesoresGUI();
 	private AlumnosGUI alumno = new AlumnosGUI();
+	private ImparteGUI imparte = new ImparteGUI();
 	
 	public UniversidadGUI()
 	{
@@ -151,6 +152,18 @@ public class UniversidadGUI extends JFrame implements ActionListener
 				panel.setVisible(false);
 			}
 			panel = alumno.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+
+		if(event.getSource() == miAsignar)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = imparte.getPanel2();
 			panel.setVisible(true);
 			add(panel);
 			setVisible(true);
