@@ -2,24 +2,22 @@ import java.util.*;
 
 public class AlumnosDP
 {
+	private String matricula;
 	private String nombre;
-	private String carrera;
-	private int plan;
 	private String domicilio;
 	private String telefono;
-	private String cursos;
-	private String matricula;
+	private String carrera;
+	private String plan;
 
 	//Constructors
 	public AlumnosDP()
 	{
-		this.nombre              = "";
-		this.carrera              = "";
-		this.plan             = 0;
-		this.domicilio           = "";
-		this.telefono         = "";
-		this.cursos   = "";
-		this.matricula               = "";
+		this.matricula = "";
+		this.nombre    = "";
+		this.domicilio = "";
+		this.telefono  = "";
+		this.carrera   = "";
+		this.plan      = "";
 	}
 
 	//String Tokenizer
@@ -27,29 +25,23 @@ public class AlumnosDP
 	{
 		StringTokenizer st = new StringTokenizer(datos, "_");
 
-			this.nombre              = st.nextToken();
-			this.carrera              = st.nextToken();
-			this.plan             = Integer.parseInt(st.nextToken());
-			this.domicilio           = st.nextToken();
-			this.telefono         = st.nextToken();
-			this.cursos   = st.nextToken();
-			this.matricula               = st.nextToken();
+			this.matricula = st.nextToken();
+			this.nombre    = st.nextToken();
+			this.domicilio = st.nextToken();
+			this.telefono  = st.nextToken();
+			this.carrera   = st.nextToken();
+			this.plan      = st.nextToken();
 	}
 
 	//Accessors (Getters)
+	public String getMatricula()
+	{
+		return this.matricula;
+	}
+
 	public String getNombre()
 	{
 		return this.nombre;
-	}
-
-	public String getCarrera()
-	{
-		return this.carrera;
-	}
-
-	public int getPlan()
-	{
-		return this.plan;
 	}
 
 	public String getDomicilio()
@@ -62,31 +54,26 @@ public class AlumnosDP
 		return this.telefono;
 	}
 
-	public String getCursos()
+	public String getCarrera()
 	{
-		return this.cursos;
+		return this.carrera;
 	}
 
-	public String getMatricula()
+	public String getPlan()
 	{
-		return this.matricula;
+		return this.plan;
 	}
 
 	//Mutators (Setters)
 
+	public void setMatricula(String matricula)
+	{
+		this.matricula = matricula;
+	}
+
 	public void setNombre(String nombre)
 	{
 		this.nombre = nombre;
-	}
-
-	public void setCarrera(String carrera)
-	{
-		this.carrera = carrera;
-	}
-
-	public void setPlan(int plan)
-	{
-		this.plan = plan;
 	}
 
 	public void setDomicilio(String domicilio)
@@ -99,25 +86,26 @@ public class AlumnosDP
 		this.telefono = telefono;
 	}
 
-	public void setCursos(String cursos)
+	public void setCarrera(String carrera)
 	{
-		this.cursos = cursos;
+		this.carrera = carrera;
 	}
 
-	public void setMatricula(String matricula)
+	public void setPlan(String plan)
 	{
-		this.matricula = matricula;
+		this.plan = plan;
 	}
+
 
 	//Final String
 
 	public String toString()
 	{
-		return this.nombre+"_"+this.carrera+"_"+this.plan+"_"+this.domicilio+"_"+this.telefono+"_"+this.cursos+"_"+this.matricula;
+		return this.matricula+"_"+this.nombre+"_"+this.domicilio+"_"+this.telefono+"_"+this.carrera+"_"+this.plan;
 	}
 
 	public String toSQLString(){
-		return "" + this.nombre + ",'" + this.carrera + "','" + this.plan + "','" + this.domicilio + "','" + this.telefono + "','" + this.cursos + "','" + this.matricula+"'";
+		return "" + this.matricula + ",'" + this.nombre + "','" + this.domicilio + "','" + this.telefono + "','" + this.carrera + "','" + this.plan+"'";
 	}
 
 

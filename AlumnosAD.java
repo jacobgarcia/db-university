@@ -6,7 +6,7 @@ import java.sql.Statement;
 
 public class AlumnosAD{
 	
-    private Connection conexion = UniversidadAD.conexion;
+    private Connection conexion;
     private Statement statement;
 	private AlumnosDP alumnosDP;
 
@@ -17,9 +17,10 @@ public class AlumnosAD{
         alumnosDP = new AlumnosDP(datos);
         
         /* Crear String con instrucción SQL */
-        insertAlumno = "INSERT INTO Alumno VALUES(" + alumnosDP.toSQLString() + ");";
+        insertAlumno = "INSERT INTO Alumno VALUES("+ alumnosDP.toSQLString()+");";
         
         try {
+
             //1) Abrir la base de datos Banco
             statement = conexion.createStatement();
             
@@ -41,45 +42,5 @@ public class AlumnosAD{
         }
         return respuesta;
 	}
-	
-	// public String consultarAlumnos(){
- //        ResultSet result = null;
- //        String query = "";
- //        String respuesta = "";
-        
- //        query = "SELECT * FROM Alumno";
-        
- //        alumnosDP = new AlumnosDP();
- //        try{
-            
- //            //1) Abrir la base de datos Universidad
- //            statement = conexion.createStatement();
-        
- //            //2) Procesar datos de la tabla resultante
- //            result = statement.executeQuery(query);
-            
- //            while(result.next()){
- //                alumnosDP.setNombre(result.getInt(1));
- //                alumnosDP.setNombre(result.getString(2));
- //                alumnosDP.setClaveAdministrador(result.getString(3));
- //                alumnosDP.setFecha(result.getString(4));
-                
- //                respuesta = respuesta + alumnosDP.toString() + "\n";
- //            }
-            
- //            if(respuesta.equals(""))
- //            	return "BD_VACIA";
-            
- //            //3) Cerra la base de datos banco
- //            statement.close();
- //            System.out.println(conexion.nativeSQL(query));
- //        }
- //        catch(SQLException sqle){
- //            System.out.println("Error: \n" + sqle);
- //            respuesta = "ERROR";
- //        }
-        
- //        return respuesta;
- //    }
 	    
 }
