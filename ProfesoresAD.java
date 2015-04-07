@@ -86,4 +86,64 @@ public class ProfesoresAD{
         
         return respuesta;
     }
+    
+    public String consultarPor(String tipoConsulta, String str){
+	        ResultSet result = null;
+	        String query = "";
+	        String respuesta = "";
+	        
+	        if (tipoConsulta.equals("PROFESOR"))
+	        	query = "SELECT * FROM Profesor WHERE clave = '" + str.toString() + "'";
+	        	
+	        if (tipoConsulta.equals("DEPARTAMENTO"))
+	        	query = "SELECT * FROM Profesor WHERE ndepto = '" + str.toString() + "'";
+	        	
+	       	if (tipoConsulta.equals("SEXO"))
+	        	query = "SELECT * FROM Profesor WHERE sexo = '" + str.toString() + "'";
+	        
+	        profesoresDP = new ProfesoresDP();
+	        
+	        try{
+	            
+	            //1) Abrir la base de datos Universidad
+	            statement = conexion.createStatement();
+	            
+	            //2) Procesar datos de la tabla resultante
+	            result = statement.executeQuery(query);
+	            
+	            while(result.next()){
+                profesoresDP.setClave(result.getString(1));
+                profesoresDP.setNombre(result.getString(2));
+                profesoresDP.setDomicilio(result.getString(3));
+                profesoresDP.setSalario(result.getInt(4));
+                profesoresDP.setFNacimiento(result.getString(5));
+                profesoresDP.setSexo(result.getString(6));
+                profesoresDP.setClaveDepartamento(result.getInt(7));
+                
+                respuesta = respuesta + profesoresDP.toString() + "\n";
+	            }
+	            
+	            if(respuesta == ""){
+	            	if (tipoConsulta.equals("PROFESOR"))
+		          		respuesta = "PROFESOR_NO_ENCONTRADO";
+		          		
+		          	if (tipoConsulta.equals("DEPARTAMENTO"))
+		          		respuesta = "DEPARTAMENTO_NO_REGISTRADO";
+		          		
+		          	if (tipoConsulta.equals("SEXO"))
+		          		respuesta = "SEXO_NO_REGISTRADO";
+		        }
+	            
+	            //3) Cerra la base de datos banco
+	            statement.close();
+	            System.out.println(conexion.nativeSQL(query));
+	        }
+	        
+	        catch(SQLException sqle){
+	            System.out.println("Error: \n" + sqle);
+	            respuesta = "ERROR";
+	        }
+	        
+	        return respuesta;
+	    }
 }

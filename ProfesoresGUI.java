@@ -10,9 +10,12 @@ import java.util.Date;
 public class ProfesoresGUI extends JFrame implements ActionListener
 {
 	private JTextField tfNombre, tfSalario, tfDomicilio,tfFNacimiento, tfTrabajaD, tfClave, tfSexo;
-	private JButton    bRegistrar, bConsultar;
+	private JButton    bRegistrar, bConsultar, bConsultarClave, bConsultarDepto, bConsultarSexo;
 	private JTextArea  taDatos;
 	public JPanel      p1,p2;
+	
+	private JComboBox combo;
+	private String opciones[] = {"M", "F"};
 
 	private ProfesoresAD profesor = new ProfesoresAD();
 
@@ -32,7 +35,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		p2             = new JPanel();
 
 		//Agregar los atributos a los paneles
-		p1.setLayout(new GridLayout(8,2));
+		p1.setLayout(new GridLayout(10,2));
 		
 		p1.add(new JLabel("Clave del Profesor"));
 		p1.add(tfClave);
@@ -49,8 +52,12 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		p1.add(new JLabel("Fecha de Nacimiento"));
 		p1.add(tfFNacimiento);
 		
+		// JComboBox
+		combo = new JComboBox(opciones);
+		combo.addActionListener(this);
+		
 		p1.add(new JLabel("Sexo"));
-		p1.add(tfSexo);
+		p1.add(combo);
 
 		p1.add(new JLabel("Número de Departamento"));
 		p1.add(tfTrabajaD);
@@ -62,6 +69,18 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		bConsultar = new JButton("Consultar Profesores");
 		bConsultar.addActionListener(this);
 		p1.add(bConsultar);
+		
+		bConsultarClave = new JButton("Consultar Profesores por Clave");
+		bConsultarClave.addActionListener(this);
+		p1.add(bConsultarClave);
+		
+		bConsultarDepto = new JButton("Consultar Profesores por Departamento");
+		bConsultarDepto.addActionListener(this);
+		p1.add(bConsultarDepto);
+						
+		bConsultarSexo = new JButton("Consultar Profesores por Sexo");
+		bConsultarSexo.addActionListener(this);
+		p1.add(bConsultarSexo);
 		
 		p2.setLayout(new FlowLayout());
 
@@ -83,7 +102,6 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		tfFNacimiento.setText("");
 		tfTrabajaD.setText("");
 		tfClave.setText("");
-		tfSexo.setText("");
 	}
 
 	public void habilitarBotones(boolean value){
@@ -101,6 +119,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		String fnacimiento       = st.nextToken();
 		String sexo				 = st.nextToken();
 		String clavedepartamento = st.nextToken();
+		int genero = 0;
 					
 		tfNombre.setText(nombre);
 		tfSalario.setText(salario);
@@ -108,7 +127,14 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		tfFNacimiento.setText(fnacimiento);
 		tfTrabajaD.setText(clavedepartamento);
 		tfClave.setText(clave);
-		tfSexo.setText(sexo);
+		
+		if(sexo.equals("M"))
+			genero = 0;
+				
+		if(sexo.equals("F"))
+			genero = 1;
+									
+		combo.setSelectedIndex(genero);
 	}
 
 	public boolean notTokenizer(String str){
@@ -141,7 +167,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		String nombre              = tfNombre.getText();
         String domicilio           = tfDomicilio.getText();
         String salario        	   = tfSalario.getText();
-        String sexo 			   = tfSexo.getText();
+        String sexo 			   = combo.getSelectedItem().toString();
         String fnacimiento         = tfFNacimiento.getText();
         String clavedepartamento   = tfTrabajaD.getText();
         
@@ -193,10 +219,38 @@ public class ProfesoresGUI extends JFrame implements ActionListener
         return datos;
 	}
 	
+	private String consultar(String elemento){
+		String resultado = "";
+	
+		if(elemento.equals("PROFESOR")){
+			String clave = tfClave.getText();
+
+			if(clave.equals(""))
+					resultado = "PROFESOR_VACIO";
+			else
+				resultado = profesor.consultarPor("PROFESOR", clave);
+		}
+		
+		if(elemento.equals("DEPARTAMENTO")){
+			String ndepto = tfTrabajaD.getText();
+
+			if(ndepto.equals(""))
+					resultado = "DEPARTAMENTO_VACIO";
+			else
+				resultado = profesor.consultarPor("DEPARTAMENTO", ndepto);
+		}
+		
+		if(elemento.equals("SEXO")){
+			String sexo = combo.getSelectedItem().toString();
+			resultado = profesor.consultarPor("SEXO", sexo);
+		}
+
+		return resultado;
+	}
 		
 	private void print(String str){
 		
-		if((str.equals("PROFESOR_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("PROFESOR_VACIO")) || (str.equals("PROFESOR_DUPLICADO")) || (str.equals("DEPARTAMENTO_NO_REGISTRADO")))
+		if((str.equals("PROFESOR_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("PROFESOR_VACIO")) || (str.equals("PROFESOR_DUPLICADO")) || (str.equals("DEPARTAMENTO_NO_REGISTRADO"))|| (str.equals("ERROR")) || (str.equals("DEPARTAMENTO_VACIO")) || (str.equals("SEXO_NO_REGISTRADO")))
 		{	
 			if(str.equals("PROFESOR_NO_ENCONTRADO"))
 				taDatos.setText("La clave de profesor '" + tfClave.getText() + "' no se encontró en la base de datos.");
@@ -209,12 +263,21 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 			
 			if(str.equals("PROFESOR_VACIO"))
 				taDatos.setText("El campo 'Clave del Profesor' se encuentra vacío.");
+						
+			if(str.equals("DEPARTAMENTO_VACIO"))
+				taDatos.setText("El campo 'Número de Departamento' se encuentra vacío.");
 			
 			if(str.equals("PROFESOR_DUPLICADO"))
 				taDatos.setText("El profesor con clave '" + tfClave.getText() + "' ya se encuentra registrado. \nPor favor introduce una clave válida distinta.");
 				
 			if(str.equals("DEPARTAMENTO_NO_REGISTRADO"))
 				taDatos.setText("El departamento con número '" + tfTrabajaD.getText() + "' no se encuentra en la base de datos. \nPor favor introduce un Departamento válido."); 
+				
+			if (str.equals("ERROR"))
+				taDatos.setText("No se pudo realizar la consulta.");
+
+			if (str.equals("SEXO_NO_REGISTRADO"))
+				taDatos.setText("No existen registros de profesores con sexo '" + combo.getSelectedItem().toString() + "' no existen en la base de datos.");
 
 		}
 		else
@@ -237,8 +300,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		        //2) Comprobar que todos los campos cumplan con los diversos requisitos, y en caso de que estos no se respeten, evitar enviar los datos en ese estado
 				if(datos.equals("CAMPO_VACIO")||datos.equals("TOKEN")||datos.equals("NEGATIVO")||datos.equals("NO_NUMERICO"))
 					print(datos);
-				else
-				{
+				else {
 					taDatos.setText(datos);
 					//3) Enviar los datos a la clase AD a través del metodo registrarGrado()
 					resultado = profesor.registrarProfesor(datos);
@@ -257,6 +319,29 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 				String datos = profesor.consultarProfesores();
 				print(datos);
 			}
+	
+			
+			if (e.getSource() == bConsultarClave){
+				String resultado = consultar("PROFESOR");
+				if(resultado.equals("PROFESOR_VACIO")||(resultado.equals("ERROR"))||(resultado.equals("PROFESOR_NO_ENCONTRADO")))
+					print(resultado);
+				else {
+					//Colocar los datos en los TextFields
+					mostrar(resultado);	
+					print(resultado);
+				}		
+			}
+								
+			if (e.getSource() == bConsultarDepto){	
+				String resultado = consultar("DEPARTAMENTO");
+				print(resultado);
+			}
+			
+			if (e.getSource() == bConsultarSexo){	
+				String resultado = consultar("SEXO");
+				print(resultado);
+			}
+
 		}
 
 }
