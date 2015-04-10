@@ -10,7 +10,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class TomaGUI extends JFrame implements ActionListener
 {
-	private JTextField tfMatricula, tfClaveCurso;
+	private JTextField tfMatricula, tfClaveCurso, tfGrupo;
 	private JButton    bRegistrar, bConsultarAlumno, bConsultarCurso, bConsultar;
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
@@ -23,18 +23,22 @@ public class TomaGUI extends JFrame implements ActionListener
 		//Inicializar los atributos
 		tfMatricula 	= new JTextField();
 		tfClaveCurso   		= new JTextField();
+		tfGrupo   		= new JTextField();
 		taDatos    		= new JTextArea(15, 63);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		
 		//Agregar los atributos a los paneles
-		p1.setLayout(new GridLayout(4, 2));
+		p1.setLayout(new GridLayout(5, 2));
 		
 		p1.add(new JLabel("Matrícula del Alumno"));
 		p1.add(tfMatricula);
 
 		p1.add(new JLabel("Clave del Curso"));
 		p1.add(tfClaveCurso);
+		
+		p1.add(new JLabel("Grupo"));
+		p1.add(tfGrupo);
 
 		bRegistrar = new JButton("Inscribir Curso");
 		bRegistrar.addActionListener(this);
@@ -70,6 +74,7 @@ public class TomaGUI extends JFrame implements ActionListener
 	public void clearFields(){
 		tfMatricula.setText("");
 		tfClaveCurso.setText("");
+		tfGrupo.setText("");
 	}
 	
 	public void habilitarBotones(boolean value){
@@ -78,6 +83,7 @@ public class TomaGUI extends JFrame implements ActionListener
 						
 		tfMatricula.setEnabled(value);
 		tfClaveCurso.setEnabled(value);
+		tfGrupo.setEnabled(value);
 	}
 	
 	private void mostrar(String str){
@@ -85,9 +91,11 @@ public class TomaGUI extends JFrame implements ActionListener
 					
 		String claveProfesor = st.nextToken();
 		String claveCurso = st.nextToken();
+		String grupo = st.nextToken();
 					
 		tfMatricula.setText(claveProfesor);
 		tfClaveCurso.setText(claveCurso);
+		tfGrupo.setText(grupo);
 	}
 		
 	public boolean notTokenizer(String str){
@@ -137,26 +145,40 @@ public class TomaGUI extends JFrame implements ActionListener
 	
 	private String obtenerDatos(){
 		boolean token = false;
+		int group;
 		
 		String claveProfesor  = tfMatricula.getText();
 		String claveCurso     = tfClaveCurso.getText();
+		String grupo     	  = tfGrupo.getText();
 
         String datos = "";
 		
-		if(claveProfesor.equals("")||claveCurso.equals(""))
+		if(claveProfesor.equals("")||claveCurso.equals("")||grupo.equals(""))
 			datos = "CAMPO_VACIO";
         else
-        { 		
-    		// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
-			token = notTokenizer(claveProfesor); //Clave ALUMNO
-		    if(token == false)
-			  token = notTokenizer(claveCurso); //Clave Curso
-	       	
-	       	if(token == false)
-	        	datos = claveProfesor + "_" + claveCurso;
-	        else
-	        	datos = "TOKEN";
-        	
+        { 	try {	
+        		group = Integer.parseInt(grupo);
+        		
+        		if (group < 1)
+        			datos = "NEGATIVO";
+        		else {
+					// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
+					token = notTokenizer(claveProfesor); //Clave ALUMNO
+					if(token == false)
+					  token = notTokenizer(claveCurso); //Clave Curso
+				   	
+				   	if(token == false)
+						datos = claveProfesor + "_" + claveCurso + "_" + grupo;
+					else
+						datos = "TOKEN";
+				}
+			}
+				
+			catch(NumberFormatException nfe)
+        	{
+        		System.out.println("Error: " + nfe);
+        		datos = "NO_NUMERICO";
+        	}
         }
     
         return datos;
@@ -228,7 +250,7 @@ public class TomaGUI extends JFrame implements ActionListener
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
 			    
-			    if(!resultado.equals("CURSO_DUPLICADO"))
+			    if(!resultado.equals("CURSO_DUPLICADO") && !resultado.equals("CURSO_NO_REGISTRADO"))
 			    	//5) Quitar la información de los TextFields
 			    	clearFields();	
 			}

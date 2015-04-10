@@ -4,12 +4,14 @@ public class TomaDP
 {
 	private String matricula;
 	private String claveCurso;
+	private int grupo;
 
 	//Constructors
 	public TomaDP()
 	{
 		this.matricula = "";
 		this.claveCurso    = "";
+		this.grupo = 0;
 	}
 
 	//String Tokenizer
@@ -19,6 +21,7 @@ public class TomaDP
 
 			this.matricula = st.nextToken();
 			this.claveCurso    = st.nextToken();
+			this.grupo = Integer.parseInt(st.nextToken());
 	}
 
 	//Accessors (Getters)
@@ -44,15 +47,20 @@ public class TomaDP
 	{
 		this.claveCurso = claveCurso;
 	}
+	
+	public void setGrupo(int grupo)
+	{
+		this.grupo = grupo;
+	}
 
 	//Final String
 
 	public String toString()
 	{
-		return this.matricula+"_"+this.claveCurso; 
+		return this.matricula+"_"+this.claveCurso + "_" + this.grupo; 
 	}
 
 	public String toSQLString(){
-		return "'" + this.matricula + "','" + this.claveCurso+"'"; 
+		return "'" + this.matricula + "','" + this.claveCurso+"'," + this.grupo; 
 	}
 }

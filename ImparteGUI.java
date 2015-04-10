@@ -221,7 +221,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 				taDatos.setText("Los datos que se capturan no pueden contener un '_'");
 			
 			if(str.equals("CURSO_DUPLICADO"))
-				taDatos.setText("Ya se tiene registrado el grupo '" + tfGrupo.getText + "' para el curso " + tfClaveCurso.getText() + ". \nPor favor introduce un grupo o curso o distinto");
+				taDatos.setText("Ya se tiene registrado el grupo '" + tfGrupo.getText() + "' para el curso " + tfClaveCurso.getText() + ". \nPor favor introduce un grupo o curso o distinto");
 				
 			if(str.equals("CURSO_NO_REGISTRADO"))
 				taDatos.setText("El Profesor '" + tfClaveProfesor.getText() + "' o el curso '" + tfClaveCurso.getText() + "' no están registrados en la base de datos.\nPor favor introduce nuevos datos válidos." );

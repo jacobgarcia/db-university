@@ -62,6 +62,7 @@ public class TomaAD{
             while(result.next()){
                 TomaDP.setMatricula(result.getString(1));
                 TomaDP.setClaveCurso(result.getString(2));
+                TomaDP.setGrupo(result.getInt(3));
                 
                 respuesta = respuesta + TomaDP.toString() + "\n";
             }
@@ -105,6 +106,7 @@ public class TomaAD{
 	            while(result.next()){
                 TomaDP.setMatricula(result.getString(1));
                 TomaDP.setClaveCurso(result.getString(2));
+                TomaDP.setGrupo(result.getInt(3));
                 
                 respuesta = respuesta + TomaDP.toString() + "\n";
 	            }

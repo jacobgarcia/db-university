@@ -31,7 +31,7 @@ public class AlumnosGUI extends JFrame implements ActionListener
 		p2             = new JPanel();
 
 		//Agregar los atributos a los paneles
-		p1.setLayout(new GridLayout(9,2));
+		p1.setLayout(new GridLayout(8,2));
 
 		p1.add(new JLabel("Matricula"));
 		p1.add(tfMatricula);
@@ -59,11 +59,11 @@ public class AlumnosGUI extends JFrame implements ActionListener
 		bConsultar.addActionListener(this);
 		p1.add(bConsultar);
 
-		bConsultarMatricula = new JButton("Consultar Matricula");
+		bConsultarMatricula = new JButton("Consultar Alumnos por Matrícula");
 		bConsultarMatricula.addActionListener(this);
 		p1.add(bConsultarMatricula);
 
-		bConsultarCarrera = new JButton("Consultar Carrera");
+		bConsultarCarrera = new JButton("Consultar Alumnos por Carrera");
 		bConsultarCarrera.addActionListener(this);
 		p1.add(bConsultarCarrera);
 		
@@ -176,13 +176,14 @@ public class AlumnosGUI extends JFrame implements ActionListener
 					    	}
 				     	}
 			    	}
+			    	
+			   		if(token == false)
+		    			datos = matricula+"_"+nombre+"_"+domicilio+"_"+telefono+"_"+carrera+"_"+plan;
+		   	   		 else
+		    			datos = "TOKEN";
         			
         		}
 		    	 
-		     	if(token == false)
-		    		datos = matricula+"_"+nombre+"_"+domicilio+"_"+telefono+"_"+carrera+"_"+plan;
-		   	    else
-		    		datos = "TOKEN";
         	}
         	catch(NumberFormatException nfe)
         	{
@@ -220,7 +221,7 @@ public class AlumnosGUI extends JFrame implements ActionListener
 
 	private void print(String str){
 		
-		if((str.equals("ALUMNO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("ALUMNO_VACIO")) || (str.equals("ALUMNO_DUPLICADO")) || (str.equals("CARRERA_VACIO")) || (str.equals("CARRERA_NO_REGISTRADO")))
+		if((str.equals("ALUMNO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("ALUMNO_VACIO")) || (str.equals("ALUMNO_DUPLICADO")) || (str.equals("CARRERA_VACIO")) || (str.equals("CARRERA_NO_REGISTRADO")) || (str.equals("NEGATIVO"))||(str.equals("NO_NUMERICO")))
 		{	
 			if(str.equals("ALUMNO_NO_ENCONTRADO"))
 				taDatos.setText("La clave de alumno '" + tfMatricula.getText() + "' no se encontró en la base de datos.");
@@ -242,6 +243,10 @@ public class AlumnosGUI extends JFrame implements ActionListener
 			
 			if(str.equals("ALUMNO_DUPLICADO"))
 				taDatos.setText("El alumno con clave '" + tfMatricula.getText() + "' ya se encuentra registrado. \nPor favor introduce una matrícula válida distinta.");
+			
+			if(str.equals("NEGATIVO") || str.equals("NO_NUMERICO"))
+				taDatos.setText("El campo del 'Plan' debe contener un número válido entero positivo.\nPor favor introduce un nuevo plan válido.");	
+				
 		}
 		else
 			taDatos.setText(str);
