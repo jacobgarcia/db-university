@@ -15,7 +15,7 @@ public class ReporteAlumnoGUI extends JFrame implements ActionListener
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
 	
-	private ReporteAlumnoAD cursos = new ReporteAlumnoAD(); 
+	private ReporteAlumnoAD reporteAlumno = new ReporteAlumnoAD(); 
 
 	public ReporteAlumnoGUI(){
 		super("Reporte Alumno");
@@ -62,13 +62,13 @@ public class ReporteAlumnoGUI extends JFrame implements ActionListener
 		tfMatricula.setEnabled(value);
 	}
 	
-	private void mostrar(String str){
-		StringTokenizer st = new StringTokenizer(str, "_");
+	// private void mostrar(String str){
+	// 	StringTokenizer st = new StringTokenizer(str, "_");
 					
-		String matricula = setText(matricula);
+	// 	String matricula = setText(matricula);
 					
-		tfMatricula.setText(matricula);
-	}
+	// 	tfMatricula.setText(matricula);
+	// }
 		
 	public boolean notTokenizer(String str){
 		Character array[] = new Character[str.length()];
@@ -106,7 +106,7 @@ public class ReporteAlumnoGUI extends JFrame implements ActionListener
 		    token = notTokenizer(matricula); //Clave
 		    if(token == false)
 		    {
-	    		datos = clave+"_"+nombre+"_"+semestre+"_"+ndepto;
+	    		datos = matricula;
 	    	}
 	   	    else
     			datos = "TOKEN";
@@ -124,7 +124,7 @@ public class ReporteAlumnoGUI extends JFrame implements ActionListener
 			if(matricula.equals(""))
 					resultado = "MATRICULA_VACIO";
 			else
-				resultado = reporteAlumno.consulta(semestre);
+				resultado = reporteAlumno.reporteDelAlumno(matricula);
 		}
 
 		return resultado;
@@ -170,8 +170,8 @@ public class ReporteAlumnoGUI extends JFrame implements ActionListener
 				print(datos);
 			else
 			{
-				//3) Enviar los datos a la clase AD a través del metodo reporteAlumno()
-			    resultado = reporteAlumno.reporteDeAlumno(datos);
+				//3) Enviar los datos a la clase AD a través del metodo consultar()
+			    resultado = consultar("ALUMNO");
 	
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
