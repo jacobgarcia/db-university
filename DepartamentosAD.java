@@ -3,6 +3,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.LinkedList;
 
 public class DepartamentosAD{
 	
@@ -137,5 +138,79 @@ public class DepartamentosAD{
 	        
 	        return respuesta;
 	    }
+	    
+	    public String[] opciones() {
+	    	LinkedList ll = new LinkedList();
+	    	String options[];
+	    	int i = 0;
+	    	
+	    	ResultSet result = null;
+        	String query = "";
+        
+        	query = "SELECT clave FROM Profesor";
+        
+       		departamentosDP = new DepartamentosDP();
+        	try {
+            
+            	//1) Abrir la base de datos Universidad
+            	statement = conexion.createStatement();
+        
+            	//2) Procesar datos de la tabla resultante
+            	result = statement.executeQuery(query);
+            
+            	while(result.next()){
+            		ll.add(result.getString(1));
+            		i++;
+            	}
+            	
+            	options = new String[i + 1];
+            	options[0] = "N/A";
+            	for (int j = 1; j <= i; j++){
+					options[j] = (String) ll.get(j - 1);
+            	} 
+            
+           		//3) Cerra la base de datos banco
+            	statement.close();
+            	System.out.println(conexion.nativeSQL(query));
+        	}
+        	catch(SQLException sqle){
+            	System.out.println("Error: \n" + sqle);
+            	            	
+            	options = new String[1];
+            	options[0] = "N/A";
+        	}
+        
+	    	return options;
+	    }
+	    
+	    	
+	public String cambiarAdministrador(String admin, String ndepto){
+        String query = "";
+        String respuesta = "";
+        
+        query = "UPDATE Departamento SET clave_admin = '" + admin + "' WHERE ndepto = '" + ndepto + "'";
+        
+        departamentosDP = new DepartamentosDP();
+        try{
+            
+            //1) Abrir la base de datos Universidad
+            statement = conexion.createStatement();
+        
+            //2) Procesar datos de la tabla resultante
+            statement.executeUpdate(query);
+            
+            respuesta = "Cambio administrativo exitóso.";
+            
+            //3) Cerra la base de datos banco
+            statement.close();
+            System.out.println(conexion.nativeSQL(query));
+        }
+        catch(SQLException sqle){
+            System.out.println("Error: \n" + sqle);
+            respuesta = "ERROR";
+        }
+        
+        return respuesta;
+    }
 	    
 }

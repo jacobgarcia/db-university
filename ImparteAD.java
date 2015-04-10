@@ -18,7 +18,7 @@ public class ImparteAD{
 
 		/*Crear String con instrucción SQL*/
 		insertImparte = "INSERT INTO Imparte VALUES(" + imparteDP.toSQLString() + ");";
-
+		System.out.println(insertImparte);
 		try{
 
 			//1) Abrir la base de datos Universidad
@@ -62,6 +62,8 @@ public class ImparteAD{
             while(result.next()){
                 imparteDP.setClaveProfesor(result.getString(1));
                 imparteDP.setClaveCurso(result.getString(2));
+                imparteDP.setGrupo(result.getInt(3));
+                imparteDP.setHorario(result.getString(4));
                 
                 respuesta = respuesta + imparteDP.toString() + "\n";
             }
@@ -105,6 +107,8 @@ public class ImparteAD{
 	            while(result.next()){
                 imparteDP.setClaveProfesor(result.getString(1));
                 imparteDP.setClaveCurso(result.getString(2));
+                imparteDP.setGrupo(result.getInt(3));
+                imparteDP.setHorario(result.getString(4));
                 
                 respuesta = respuesta + imparteDP.toString() + "\n";
 	            }

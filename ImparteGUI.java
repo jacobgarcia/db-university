@@ -10,7 +10,7 @@ import java.util.Date;
 @SuppressWarnings("serial")
 public class ImparteGUI extends JFrame implements ActionListener
 {
-	private JTextField tfClaveProfesor, tfClaveCurso;
+	private JTextField tfClaveProfesor, tfClaveCurso, tfGrupo, tfHorario;
 	private JButton    bRegistrar, bConsultarProfesor, bConsultarCurso, bConsultar;
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
@@ -23,19 +23,27 @@ public class ImparteGUI extends JFrame implements ActionListener
 		//Inicializar los atributos
 		tfClaveProfesor 	= new JTextField();
 		tfClaveCurso   		= new JTextField();
+		tfGrupo 			= new JTextField();
+		tfHorario			= new JTextField();
 		taDatos    		= new JTextArea(15, 63);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		
 		//Agregar los atributos a los paneles
-		p1.setLayout(new GridLayout(4, 2));
+		p1.setLayout(new GridLayout(6, 2));
 		
 		p1.add(new JLabel("Clave del Profesor"));
 		p1.add(tfClaveProfesor);
 
 		p1.add(new JLabel("Clave del Curso"));
 		p1.add(tfClaveCurso);
-
+		
+		p1.add(new JLabel("Grupo"));
+		p1.add(tfGrupo);
+		
+		p1.add(new JLabel("Horario"));
+		p1.add(tfHorario);
+		
 		bRegistrar = new JButton("Dar de Alta al Curso");
 		bRegistrar.addActionListener(this);
 		p1.add(bRegistrar);
@@ -70,6 +78,8 @@ public class ImparteGUI extends JFrame implements ActionListener
 	public void clearFields(){
 		tfClaveProfesor.setText("");
 		tfClaveCurso.setText("");
+		tfGrupo.setText("");
+		tfHorario.setText("");
 	}
 	
 	public void habilitarBotones(boolean value){
@@ -85,9 +95,13 @@ public class ImparteGUI extends JFrame implements ActionListener
 					
 		String claveProfesor = st.nextToken();
 		String claveCurso = st.nextToken();
-					
+		String grupo = st.nextToken();
+		String horario = st.nextToken();
+							
 		tfClaveProfesor.setText(claveProfesor);
 		tfClaveCurso.setText(claveCurso);
+		tfGrupo.setText(grupo);
+		tfHorario.setText(horario);
 	}
 		
 	public boolean notTokenizer(String str){
@@ -137,26 +151,48 @@ public class ImparteGUI extends JFrame implements ActionListener
 	
 	private String obtenerDatos(){
 		boolean token = false;
+		int group;
 		
 		String claveProfesor  = tfClaveProfesor.getText();
 		String claveCurso     = tfClaveCurso.getText();
+		String grupo  		  = tfGrupo.getText();
+		String horario   	  = tfHorario.getText();
 
         String datos = "";
 		
-		if(claveProfesor.equals("")||claveCurso.equals(""))
+		if(claveProfesor.equals("")||claveCurso.equals("")||grupo.equals("")||horario.equals(""))
 			datos = "CAMPO_VACIO";
         else
-        { 		
-    		// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
-			token = notTokenizer(claveProfesor); //Clave Profesor
-		    if(token == false)
-			  token = notTokenizer(claveCurso); //Clave Curso
+        { 	
+        	try {	
+        		group = Integer.parseInt(grupo);
+        		
+        		if (group < 1)
+        			datos = "NEGATIVO";
+        		else {
+					// Verificar que no existan tokens en los strings, en este caso '_' que puedan llegar a comprometer el correcto funcionamiento del sistema
+					token = notTokenizer(claveProfesor); //Clave Profesor
+					if(token == false){
+					  token = notTokenizer(claveCurso); //Clave Curso
+					   if(token == false){
+					 	 token = notTokenizer(grupo); //Grupo
+						 if(token == false)
+						 	token = notTokenizer(horario); //Horario
+						 	
+						 if(token == false)
+	        				datos = claveProfesor + "_" + claveCurso + "_" + grupo + "_" + horario;
+						 else
+							datos = "TOKEN";
+					   }
+				 	}
+				 }
+			 }
+			catch(NumberFormatException nfe)
+        	{
+        		System.out.println("Error: " + nfe);
+        		datos = "NO_NUMERICO";
+        	}
 	       	
-	       	if(token == false)
-	        	datos = claveProfesor + "_" + claveCurso;
-	        else
-	        	datos = "TOKEN";
-        	
         }
     
         return datos;
@@ -185,7 +221,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 				taDatos.setText("Los datos que se capturan no pueden contener un '_'");
 			
 			if(str.equals("CURSO_DUPLICADO"))
-				taDatos.setText("El Profesor '" + tfClaveProfesor.getText() + "' ya imparte el curso" + tfClaveCurso.getText() + ". \nPor favor introduce otro Profesor u otro Curso.");
+				taDatos.setText("Ya se tiene registrado el grupo '" + tfGrupo.getText + "' para el curso " + tfClaveCurso.getText() + ". \nPor favor introduce un grupo o curso o distinto");
 				
 			if(str.equals("CURSO_NO_REGISTRADO"))
 				taDatos.setText("El Profesor '" + tfClaveProfesor.getText() + "' o el curso '" + tfClaveCurso.getText() + "' no están registrados en la base de datos.\nPor favor introduce nuevos datos válidos." );
@@ -194,6 +230,8 @@ public class ImparteGUI extends JFrame implements ActionListener
 			if(str.equals("PROFESOR_NO_ENCONTRADO"))
 				taDatos.setText("No se tienen cursos registrados para el profesor '" + tfClaveProfesor.getText() + "'.");
 				
+			if(str.equals("NEGATIVO") || str.equals("NO_NUMERICO"))
+				taDatos.setText("El campo del 'Grupo' debe contener un número válido entero positivo.\nPor favor introduce un nuevo grupo válido.");	
 											
 			if(str.equals("CURSO_NO_ENCONTRADO"))
 				taDatos.setText("No se tienen cursos registrados con la clave '" + tfClaveCurso.getText() + "'.");					
@@ -218,7 +256,7 @@ public class ImparteGUI extends JFrame implements ActionListener
             String resultado = "";
             
             //2) Comprobar que todos los campos cumplan con los diversos requisitos, y en caso de que estos no se respeten, evitar enviar los datos en ese estado
-			if(datos.equals("CAMPO_VACIO")||datos.equals("TOKEN"))
+			if(datos.equals("CAMPO_VACIO")||datos.equals("TOKEN")||datos.equals("NEGATIVO")||datos.equals("NO_NUMERICO"))
 				print(datos);
 			else
 			{
@@ -228,7 +266,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
 			    
-			    if(!resultado.equals("CURSO_DUPLICADO"))
+			    if(!resultado.equals("CURSO_DUPLICADO") && !resultado.equals("CURSO_NO_REGISTRADO"))
 			    	//5) Quitar la información de los TextFields
 			    	clearFields();	
 			}
@@ -247,7 +285,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 		  if (e.getSource() == bConsultarCurso){
 		 	String resultado = consultar("CURSO");
 	 		print(resultado);
-		 }				
+		  }			
 	}
 
 	public static void main(String args[]){

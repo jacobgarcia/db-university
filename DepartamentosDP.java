@@ -25,6 +25,9 @@ public class DepartamentosDP
 			this.nombre 	= st.nextToken();
 			this.claveAdministrador		= st.nextToken();
 			this.fecha		= st.nextToken();
+			
+			if (this.claveAdministrador.equals("N/A"))
+				this.claveAdministrador = "NULL";
 	}
 	
 	//Accessors (Getters)
@@ -61,7 +64,10 @@ public class DepartamentosDP
 
 	public void setClaveAdministrador(String claveAdministrador)
 	{
-		this.claveAdministrador = claveAdministrador;
+		if (claveAdministrador == null)
+			this.claveAdministrador = "N/A";
+		else
+			this.claveAdministrador = claveAdministrador;
 	}
 
 	public void setFecha(String fecha)
@@ -76,6 +82,9 @@ public class DepartamentosDP
 	}
 	
     public String toSQLString(){
-        return "" + this.ndepto + ",'" + this.nombre+"','"+this.claveAdministrador+"','"+this.fecha+"'";
+   		if(this.claveAdministrador.equals("NULL"))
+       	 	return "" + this.ndepto + ",'" + this.nombre+"',"+this.claveAdministrador+",'"+this.fecha+"'";
+       else
+       	 	return "" + this.ndepto + ",'" + this.nombre+"','"+this.claveAdministrador+"','"+this.fecha+"'";
     }
 }

@@ -17,8 +17,8 @@ import java.awt.event.*;
 public class UniversidadGUI extends JFrame implements ActionListener
 {
 	private JMenuBar mbProyecto;
-	private JMenu mProfesores, mDepartamentos, mAlumnos, mCursos;
-	private JMenuItem miRegistroProfesor, miFormacion, miRegistroDepartamento, miAsignar, miRegistroAlumno, miInscripcion, miRegistroCurso;
+	private JMenu mProfesores, mDepartamentos, mAlumnos, mCursos, mEntidades, mReportes, mSalir;
+	private JMenuItem miRegistroProfesor, miFormacion, miRegistroDepartamento, miAsignar, miRegistroAlumno, miInscripcion, miRegistroCurso, miSalir;
 	private JPanel panel;
 	private JMenuItem miEspiralRectangulo, miEspiralCirculo, miCubo, miEspiralCubo, miArticulos;
 	
@@ -69,6 +69,13 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		miRegistroCurso = new JMenuItem("Registro de Cursos");
 		miRegistroCurso.addActionListener(this);
 		
+		miSalir = new JMenuItem("Salir");
+		miSalir.addActionListener(this);
+		
+		mEntidades = new JMenu("Administración de Entidades");
+		mReportes = new JMenu("Generación de Reportes");
+		mSalir = new JMenu("Opciones");
+		
 		
 		//Panel
 		panel = new JPanel();
@@ -86,10 +93,16 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		
 		mCursos.add(miRegistroCurso);
 
-		mbProyecto.add(mProfesores);
-		mbProyecto.add(mDepartamentos);
-		mbProyecto.add(mCursos);
-		mbProyecto.add(mAlumnos);
+		mEntidades.add(mProfesores);
+		mEntidades.add(mDepartamentos);
+		mEntidades.add(mCursos);
+		mEntidades.add(mAlumnos);
+		
+		mSalir.add(miSalir);
+		
+		mbProyecto.add(mEntidades);
+		mbProyecto.add(mReportes);
+		mbProyecto.add(mSalir);
 		
 		//2) Visualizar Frame
 		setJMenuBar(mbProyecto);
@@ -183,6 +196,9 @@ public class UniversidadGUI extends JFrame implements ActionListener
 			add(panel);
 			setVisible(true);
 		}
+		
+		if (event.getSource() == miSalir)
+			System.exit(0);
 	}
 	
 	public static void main(String args[])
