@@ -30,6 +30,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 	private ImparteGUI imparte = new ImparteGUI();
 	private TomaGUI toma = new TomaGUI();
 	private ReporteAlumnoGUI reporteAlumno = new ReporteAlumnoGUI();
+	private ReporteCursoGUI reporteCurso = new ReporteCursoGUI();
 	
 	public UniversidadGUI()
 	{
@@ -75,8 +76,13 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		mEntidades = new JMenu("Administración de Entidades");
 
 		mReportes = new JMenu("Generación de Reportes");
+
 		miReporteAlumno = new JMenuItem("Alumno");
 		miReporteAlumno.addActionListener(this);
+
+		miReporteCurso = new JMenuItem("Curso");
+		miReporteCurso.addActionListener(this);
+
 
 		mSalir = new JMenu("Opciones");
 		
@@ -103,6 +109,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		mEntidades.add(mAlumnos);
 
 		mReportes.add(miReporteAlumno);
+		mReportes.add(miReporteCurso);
 		
 		mSalir.add(miSalir);
 		
@@ -210,6 +217,18 @@ public class UniversidadGUI extends JFrame implements ActionListener
 				panel.setVisible(false);
 			}
 			panel = reporteAlumno.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+
+		if(event.getSource() == miReporteCurso)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = reporteCurso.getPanel2();
 			panel.setVisible(true);
 			add(panel);
 			setVisible(true);
