@@ -25,7 +25,7 @@ public class CursosIUG extends JFrame implements ActionListener
 		tfNombre   		= new JTextField();
 		tfNumeroDepto			= new JTextField();
 		tfSemestre	= new JTextField();
-		taDatos    		= new JTextArea(12, 53);
+		taDatos    		= new JTextArea(15, 53);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		
@@ -244,7 +244,7 @@ public class CursosIUG extends JFrame implements ActionListener
 				taDatos.setText("El campo 'Clave' se encuentra vacío.");
 			
 			if(str.equals("CLAVE_DUPLICADA"))
-				taDatos.setText("El curso '" + tfClave.getText() + "' ya se encuentra en la base de datos. \nPor favor introduce otra clave de curso.");
+				taDatos.setText("El curso con clave '" + tfClave.getText() + "' o nombre '" + tfNombre.getText() + "' ya se encuentra en la base de datos. \nPor favor introduce otra clave o nombre de curso.");
 			
 			if(str.equals("SEMESTRE_NO_REGISTRADO"))
 				taDatos.setText("No se tienen cursos registrados para el semestre '" + tfSemestre.getText() + "'.");

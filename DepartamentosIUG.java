@@ -104,6 +104,8 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 		add(p2);
 		/* setSize(720,400);
 		setVisible(true); */
+		bCancelar.setEnabled(false);
+		bConfirmar.setEnabled(false);
 		
 		
 	}
@@ -129,6 +131,9 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 				
 		tfNumeroDepto.setEnabled(value);
 		tfNombre.setEnabled(value);
+		
+		bCancelar.setEnabled(!value);
+		bConfirmar.setEnabled(!value);
 		
 		if (value == true)
 			combo.setSelectedItem("N/A");
@@ -272,7 +277,7 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 				taDatos.setText("El campo 'Número de Departamento' se encuentra vacío.");
 			
 			if(str.equals("DEPARTAMENTO_DUPLICADO"))
-				taDatos.setText("El departamento '" + tfNumeroDepto.getText() + "' ya se encuentra en la base de datos. \nPor favor introduce otro Número de Departamento");
+				taDatos.setText("El departamento con número '" + tfNumeroDepto.getText() + "' o nombre '" + tfNombre.getText() + "' ya se encuentra en la base de datos. \nPor favor introduce otro Nombre o Número de Departamento.");
 			
 			if(str.equals("ADMINISTRADOR_NO_REGISTRADO"))
 				taDatos.setText("No se tienen departamentos registrados para el administrador '" + tfAdministrador.getText() + "'.");

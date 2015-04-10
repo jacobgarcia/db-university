@@ -26,7 +26,7 @@ public class AlumnosGUI extends JFrame implements ActionListener
 		tfTelefono     = new JTextField();
 		tfCarrera      = new JTextField();
 		tfPlan         = new JTextField();
- 		taDatos		   = new JTextArea(12, 63);
+ 		taDatos		   = new JTextArea(13, 48);
 		p1			   = new JPanel();
 		p2             = new JPanel();
 

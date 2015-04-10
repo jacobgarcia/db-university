@@ -25,7 +25,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 		tfClaveCurso   		= new JTextField();
 		tfGrupo 			= new JTextField();
 		tfHorario			= new JTextField();
-		taDatos    		= new JTextArea(15, 63);
+		taDatos    		= new JTextArea(17, 63);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		

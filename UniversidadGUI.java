@@ -106,7 +106,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		
 		//2) Visualizar Frame
 		setJMenuBar(mbProyecto);
-		setSize(720, 400);
+		setSize(820, 470);
 		setVisible(true);
 		
 	}

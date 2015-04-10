@@ -24,7 +24,7 @@ public class TomaGUI extends JFrame implements ActionListener
 		tfMatricula 	= new JTextField();
 		tfClaveCurso   		= new JTextField();
 		tfGrupo   		= new JTextField();
-		taDatos    		= new JTextArea(15, 63);
+		taDatos    		= new JTextArea(18, 57);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		

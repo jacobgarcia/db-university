@@ -31,12 +31,12 @@ public class GradosIUG extends JFrame implements ActionListener
 		tfClave 		= new JTextField();
 		tfGrado   		= new JTextField();
 		tfDescripcion	= new JTextField();
-		taDatos    		= new JTextArea(12, 45);
+		taDatos    		= new JTextArea(18, 45);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		
 		//Agregar los atributos a los paneles
-		p1.setLayout(new GridLayout(6, 2));
+		p1.setLayout(new GridLayout(5, 2));
 		
 		p1.add(new JLabel("Clave del Profesor"));
 		p1.add(tfClave);
@@ -187,7 +187,7 @@ public class GradosIUG extends JFrame implements ActionListener
 				taDatos.setText("El grado académico '" + tfGrado.getText() + "' para el profesor '" + tfClave.getText() + "' ya se encuentra registrado. \nPor favor introduce datos válidos distintos.");
 				
 			if(str.equals("PROFESOR_NO_REGISTRADO"))
-				taDatos.setText("El profesor con clave '" + tfDescripcion.getText() + "' no se encuentra en la base de datos. \nPor favor introduce un Profesor con una clave válida.");
+				taDatos.setText("El profesor con clave '" + tfClave.getText() + "' no se encuentra en la base de datos. \nPor favor introduce un Profesor con una clave válida.");
 				
 			if(str.equals("DATOS_GRANDES"))
 				taDatos.setText("Algún campo contiene información con demasiados caracteres. \nPor favor revisa de nuevo la información y realiza los cambios donde sean necesarios.");
