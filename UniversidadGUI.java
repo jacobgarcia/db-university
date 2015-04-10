@@ -18,7 +18,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 {
 	private JMenuBar mbProyecto;
 	private JMenu mProfesores, mDepartamentos, mAlumnos, mCursos, mEntidades, mReportes, mSalir;
-	private JMenuItem miRegistroProfesor, miFormacion, miRegistroDepartamento, miAsignar, miRegistroAlumno, miInscripcion, miRegistroCurso, miReporteAlumno, miReporteCurso, miReporteListaAlumnosGrupo, miSalir;
+	private JMenuItem miRegistroProfesor, miFormacion, miRegistroDepartamento, miAsignar, miRegistroAlumno, miInscripcion, miRegistroCurso, miReporteAlumno, miReporteCurso, miReporteGrupo, miSalir;
 	private JPanel panel;
 	
 	private UniversidadAD universidad = new UniversidadAD();
@@ -31,6 +31,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 	private TomaGUI toma = new TomaGUI();
 	private ReporteAlumnoGUI reporteAlumno = new ReporteAlumnoGUI();
 	private ReporteCursoGUI reporteCurso = new ReporteCursoGUI();
+	private ReporteGrupoGUI reporteGrupo = new ReporteGrupoGUI();
 	
 	public UniversidadGUI()
 	{
@@ -83,6 +84,9 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		miReporteCurso = new JMenuItem("Curso");
 		miReporteCurso.addActionListener(this);
 
+		miReporteGrupo = new JMenuItem("Grupo");
+		miReporteGrupo.addActionListener(this);
+
 
 		mSalir = new JMenu("Opciones");
 		
@@ -110,6 +114,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 
 		mReportes.add(miReporteAlumno);
 		mReportes.add(miReporteCurso);
+		mReportes.add(miReporteGrupo);
 		
 		mSalir.add(miSalir);
 		
@@ -229,6 +234,18 @@ public class UniversidadGUI extends JFrame implements ActionListener
 				panel.setVisible(false);
 			}
 			panel = reporteCurso.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+
+		if(event.getSource() == miReporteGrupo)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = reporteGrupo.getPanel2();
 			panel.setVisible(true);
 			add(panel);
 			setVisible(true);
