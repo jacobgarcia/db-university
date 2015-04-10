@@ -35,10 +35,13 @@ public class ImparteAD{
 		}
 		catch(SQLException sqle){
 			System.out.println("Error: " + sqle);
-            	if(sqle.getErrorCode() == 1452)
+			    if(sqle.getErrorCode() == 1062)
+            		respuesta = "CURSO_DUPLICADO";
+            	else if(sqle.getErrorCode() == 1452)
             		respuesta = "CURSO_NO_REGISTRADO";
             	else
-            		respuesta = "CURSO_DUPLICADO";
+            		respuesta = "DATOS_GRANDES";
+
 		}
 		return respuesta;
 	}

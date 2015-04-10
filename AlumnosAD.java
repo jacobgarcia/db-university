@@ -35,10 +35,15 @@ public class AlumnosAD{
         }
         catch(SQLException sqle){
             	System.out.println("Error: " + sqle);
-            	if(sqle.getErrorCode() == 1452)
+            	if(sqle.getErrorCode() == 1062)
+            		respuesta = "ALUMNO_DUPLICADO";
+            	else if(sqle.getErrorCode() == 1452)
             		respuesta = "ALUMNO_NO_REGISTRADO";
             	else
-            		respuesta = "ALUMNO_DUPLICADO";
+            		respuesta = "DATOS_GRANDES";
+            	
+            		
+            	System.out.println(sqle.getErrorCode());
         }
         return respuesta;
 	}

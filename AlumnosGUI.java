@@ -221,7 +221,7 @@ public class AlumnosGUI extends JFrame implements ActionListener
 
 	private void print(String str){
 		
-		if((str.equals("ALUMNO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("ALUMNO_VACIO")) || (str.equals("ALUMNO_DUPLICADO")) || (str.equals("CARRERA_VACIO")) || (str.equals("CARRERA_NO_REGISTRADO")) || (str.equals("NEGATIVO"))||(str.equals("NO_NUMERICO")))
+		if((str.equals("ALUMNO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("ALUMNO_VACIO")) || (str.equals("ALUMNO_DUPLICADO")) || (str.equals("CARRERA_VACIO")) || (str.equals("CARRERA_NO_REGISTRADO")) || (str.equals("NEGATIVO"))||(str.equals("NO_NUMERICO")) ||(str.equals("DATOS_GRANDES")))
 		{	
 			if(str.equals("ALUMNO_NO_ENCONTRADO"))
 				taDatos.setText("La clave de alumno '" + tfMatricula.getText() + "' no se encontró en la base de datos.");
@@ -246,6 +246,9 @@ public class AlumnosGUI extends JFrame implements ActionListener
 			
 			if(str.equals("NEGATIVO") || str.equals("NO_NUMERICO"))
 				taDatos.setText("El campo del 'Plan' debe contener un número válido entero positivo.\nPor favor introduce un nuevo plan válido.");	
+				
+			if(str.equals("DATOS_GRANDES"))
+				taDatos.setText("Algún campo contiene información con demasiados caracteres. \nPor favor revisa de nuevo la información y realiza los cambios donde sean necesarios.");
 				
 		}
 		else
@@ -278,7 +281,7 @@ public class AlumnosGUI extends JFrame implements ActionListener
 					//4) Desplegar el resultado de la operación
 					print(resultado);
 					
-					if(!resultado.equals("ALUMNO_DUPLICADO"))
+					if(!resultado.equals("ALUMNO_DUPLICADO") && !resultado.equals("ALUMNO_NO_REGISTRADO")&& !resultado.equals("DATOS_GRANDES"))
 						//5) Quitar la información de los TextFields
 						clearFields();	
 				}

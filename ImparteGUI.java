@@ -200,7 +200,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 	
 	private void print(String str){
 		
-		if(str.equals("PROFESOR_VACIO")||(str.equals("CURSO_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")) || (str.equals("CURSO_DUPLICADO"))|| (str.equals("PROFESOR_NO_ENCONTRADO"))|| (str.equals("CURSO_NO_ENCONTRADO")))
+		if(str.equals("PROFESOR_VACIO")||(str.equals("CURSO_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")) || (str.equals("CURSO_DUPLICADO"))|| (str.equals("PROFESOR_NO_ENCONTRADO"))|| (str.equals("CURSO_NO_ENCONTRADO")) ||(str.equals("DATOS_GRANDES")))
 		{
 			if(str.equals("PROFESOR_VACIO"))
 				taDatos.setText("El campo 'Clave Profesor' se encuentra vacío.");
@@ -234,7 +234,11 @@ public class ImparteGUI extends JFrame implements ActionListener
 				taDatos.setText("El campo del 'Grupo' debe contener un número válido entero positivo.\nPor favor introduce un nuevo grupo válido.");	
 											
 			if(str.equals("CURSO_NO_ENCONTRADO"))
-				taDatos.setText("No se tienen cursos registrados con la clave '" + tfClaveCurso.getText() + "'.");					
+				taDatos.setText("No se tienen cursos registrados con la clave '" + tfClaveCurso.getText() + "'.");			
+				
+			if(str.equals("DATOS_GRANDES"))
+				taDatos.setText("Algún campo contiene información con demasiados caracteres. \nPor favor revisa de nuevo la información y realiza los cambios donde sean necesarios.");
+						
 		}
 		else
 			taDatos.setText(str);
@@ -266,7 +270,7 @@ public class ImparteGUI extends JFrame implements ActionListener
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
 			    
-			    if(!resultado.equals("CURSO_DUPLICADO") && !resultado.equals("CURSO_NO_REGISTRADO"))
+			    if(!resultado.equals("CURSO_DUPLICADO") && !resultado.equals("CURSO_NO_REGISTRADO") && !resultado.equals("DATOS_GRANDES"))
 			    	//5) Quitar la información de los TextFields
 			    	clearFields();	
 			}

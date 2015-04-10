@@ -248,7 +248,7 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 	
 	private void print(String str){
 		
-		if(str.equals("NOMBRE_VACIO")||(str.equals("ADMINISTRADOR_VACIO"))||(str.equals("DEPARTAMENTO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("DEPARTAMENTO_VACIO"))||(str.equals("NO_VENTA"))|| (str.equals("ADMINISTRADOR_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_DUPLICADO")) || (str.equals("PROFESOR_NO_REGISTRADO")) || (str.equals("NOMBRE_NO_REGISTRADO")))
+		if(str.equals("NOMBRE_VACIO")||(str.equals("ADMINISTRADOR_VACIO"))||(str.equals("DEPARTAMENTO_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("DEPARTAMENTO_VACIO"))||(str.equals("NO_VENTA"))|| (str.equals("ADMINISTRADOR_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_DUPLICADO")) || (str.equals("PROFESOR_NO_REGISTRADO")) || (str.equals("NOMBRE_NO_REGISTRADO"))||(str.equals("DATOS_GRANDES")))
 		{
 			if(str.equals("NOMBRE_VACIO"))
 				taDatos.setText("El campo 'Nombre' se encuentra vacío.");
@@ -283,6 +283,10 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 			if(str.equals("NOMBRE_NO_REGISTRADO"))
 				taDatos.setText("No se tienen departamentos registrados con el nombre '" + tfNombre.getText() + "'.");
 				
+			if(str.equals("DATOS_GRANDES"))
+				taDatos.setText("Algún campo contiene información con demasiados caracteres. \nPor favor revisa de nuevo la información y realiza los cambios donde sean necesarios.");
+				
+				
 		}
 		else
 			taDatos.setText(str);
@@ -315,7 +319,7 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
 			    
-			    if(!resultado.equals("DEPARTAMENTO_DUPLICADO"))
+			    if(!resultado.equals("DEPARTAMENTO_DUPLICADO") && !resultado.equals("PROFESOR_NO_REGISTRADO") && !resultado.equals("DATOS_GRANDES"))
 			    	//5) Quitar la información de los TextFields
 			    	clearFields();	
 			}

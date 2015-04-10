@@ -35,10 +35,13 @@ public class DepartamentosAD{
         }
         catch(SQLException sqle){
             	System.out.println("Error: " + sqle);
-            	if(sqle.getErrorCode() == 1452)
+            	if(sqle.getErrorCode() == 1062)
+            		respuesta = "DEPARTAMENTO_DUPLICADO";
+            	else if(sqle.getErrorCode() == 1452)
             		respuesta = "PROFESOR_NO_REGISTRADO";
             	else
-            		respuesta = "DEPARTAMENTO_DUPLICADO";
+            		respuesta = "DATOS_GRANDES";
+
         }
         return respuesta;
 	}
