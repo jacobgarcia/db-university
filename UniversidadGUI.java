@@ -78,13 +78,13 @@ public class UniversidadGUI extends JFrame implements ActionListener
 
 		mReportes = new JMenu("Generación de Reportes");
 
-		miReporteAlumno = new JMenuItem("Alumno");
+		miReporteAlumno = new JMenuItem("Materias que Cursa un Alumno");
 		miReporteAlumno.addActionListener(this);
 
-		miReporteCurso = new JMenuItem("Curso");
+		miReporteCurso = new JMenuItem("Alumnos que Llevan un Curso");
 		miReporteCurso.addActionListener(this);
 
-		miReporteGrupo = new JMenuItem("Grupo");
+		miReporteGrupo = new JMenuItem("Lista del Grupo de un Profesor");
 		miReporteGrupo.addActionListener(this);
 
 

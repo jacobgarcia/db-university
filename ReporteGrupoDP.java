@@ -6,11 +6,13 @@ public class ReporteGrupoDP
 	private String claveProfesor;
 	private String claveCursoImparte;
 	private int grupoImparte;
+	private String nombreProfesor;
 
 	//Toma//
 	private String matricula;
-	private String claveCursoToma;
-	private int    grupoToma;
+	private String nombreAlumno;
+	private String    carrera;
+	private int ndepto;
 	
 	//Constructors
 	public ReporteGrupoDP()
@@ -19,8 +21,10 @@ public class ReporteGrupoDP
 		this.claveCursoImparte = "";
 		this.grupoImparte      = 0;
 		this.matricula         = "";
-		this.claveCursoToma    = "";
-		this.grupoToma         = 0;
+		this.nombreAlumno    = "";
+		this.carrera         = "";
+		this.nombreProfesor		   = "";
+		this.ndepto = 0;
 		
 	}
 	
@@ -30,11 +34,13 @@ public class ReporteGrupoDP
 		StringTokenizer st = new StringTokenizer(datos, "_");
 
 		this.claveProfesor     = st.nextToken();
+		this.nombreProfesor 		   = st.nextToken();
+		this.ndepto = Integer.parseInt(st.nextToken());
 		this.claveCursoImparte = st.nextToken();
 		this.grupoImparte      = Integer.parseInt(st.nextToken());
 		this.matricula         = st.nextToken();
-		this.claveCursoToma    = st.nextToken();
-		this.grupoToma         = Integer.parseInt(st.nextToken());
+		this.nombreAlumno    = st.nextToken();
+		this.carrera         = st.nextToken();
 	}
 
 	//Mutators(Setters)
@@ -52,25 +58,36 @@ public class ReporteGrupoDP
 	{
 		this.grupoImparte = grupoImparte;
 	}
+	
+	public void setNdepto(int ndepto)
+	{
+		this.ndepto = ndepto;
+	}
+
 
 	public void setMatricula(String matricula)
 	{
 		this.matricula = matricula;
 	}
 
-	public void setClaveCursoToma(String claveCursoToma)
+	public void setNombreAlumno(String nombreAlumno)
 	{
-		this.claveCursoToma = claveCursoToma;
+		this.nombreAlumno = nombreAlumno;
 	}
 
-	public void setGrupoToma(int grupoToma)
+	public void setCarrera(String carrera)
 	{
-		this.grupoToma = grupoToma;
+		this.carrera = carrera;
+	}
+	
+	public void setNombreProfesor(String nombreProfesor)
+	{
+		this.nombreProfesor = nombreProfesor;
 	}
 	
 	//Final String
 	public String toString()
 	{
-		return this.claveProfesor+"_"+this.claveCursoImparte+"_"+this.grupoImparte+"_"+this.matricula+"_"+this.claveCursoToma+"_"+this.grupoToma;
+		return this.claveProfesor+"_"+this.nombreProfesor+"_"+this.ndepto+"_" + this.claveCursoImparte + "_" +this.matricula+"_"+this.nombreAlumno+"_"+this.carrera;
 	}
 }

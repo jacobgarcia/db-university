@@ -22,7 +22,7 @@ public class ReporteCursoGUI extends JFrame implements ActionListener
 		
 		//Inicializar los atributos
 		tfClaveCurso 	= new JTextField();
-		taDatos    		= new JTextArea(5, 53);
+		taDatos    		= new JTextArea(13, 30);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		

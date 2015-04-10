@@ -24,7 +24,7 @@ public class ReporteGrupoGUI extends JFrame implements ActionListener
 		tfClaveProfesor   = new JTextField();
 		tfClaveCurso      = new JTextField();
 		tfGrupo           = new JTextField();
-		taDatos    		  = new JTextArea(5, 53);
+		taDatos    		  = new JTextArea(13, 30);
 		p1  	   		  = new JPanel();
 		p2  	   		  = new JPanel();
 		

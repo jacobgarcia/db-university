@@ -15,7 +15,7 @@ public class ReporteGrupoAD{
         String query = "";
         String respuesta = "";
         
-        query = "SELECT * FROM Imparte JOIN Toma ON Imparte.clave_curso = Toma.clave_curso WHERE Imparte.clave_curso = '"+claveCurso+"' AND Imparte.clave_profesor = '"+claveProfesor+"' AND Imparte.grupo = "+grupo+"";
+        query = "SELECT Imparte.clave_profesor, Profesor.nombre, Profesor.ndepto, Imparte.clave_curso, Imparte.grupo, Alumno.matricula, Alumno.nombre, Alumno.carrera FROM Imparte JOIN Toma ON Imparte.clave_curso = Toma.clave_curso JOIN Profesor ON Imparte.clave_profesor = Profesor.clave JOIN Alumno ON Toma.matricula = Alumno.matricula WHERE Imparte.clave_curso = '"+claveCurso+"' AND Imparte.clave_profesor = '"+claveProfesor+"' AND Imparte.grupo = "+grupo;
         
         reporteGrupoDP = new ReporteGrupoDP();
 
@@ -29,11 +29,13 @@ public class ReporteGrupoAD{
             
             while(result.next()){
                 reporteGrupoDP.setClaveProfesor(result.getString(1));
-                reporteGrupoDP.setClaveCursoImparte(result.getString(2));
-                reporteGrupoDP.setGrupoImparte(result.getInt(3));
-                reporteGrupoDP.setMatricula(result.getString(4));
-                reporteGrupoDP.setClaveCursoToma(result.getString(5));
-                reporteGrupoDP.setGrupoToma(result.getInt(6));
+                reporteGrupoDP.setNombreProfesor(result.getString(2));
+                reporteGrupoDP.setNdepto(result.getInt(3));
+                reporteGrupoDP.setClaveCursoImparte(result.getString(4));
+                reporteGrupoDP.setGrupoImparte(result.getInt(5));
+                reporteGrupoDP.setMatricula(result.getString(6));
+                reporteGrupoDP.setNombreAlumno(result.getString(7));
+                reporteGrupoDP.setCarrera(result.getString(8));
                                 
                 respuesta = respuesta + reporteGrupoDP.toString() + "\n";
             }

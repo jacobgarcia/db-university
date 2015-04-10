@@ -5,27 +5,20 @@ public class ReporteAlumnoDP
 	// ALumno //
 	private String matricula;
 	private String nombre;
-	private String direccion;
-	private String telefono;
-	private String carrera;
-	private int    plan;
-
-	//Toma//
-	private String matriculaToma;
-	private String claveCurso;
-	private int    grupo;
+	private String curso;
+	private int grupo;
+	private String nombreCurso;
+	private int    semestre;
+	private int ndepto;
 	
 	//Constructors
 	public ReporteAlumnoDP()
 	{
 		this.matricula     = "";
 		this.nombre        = "";
-		this.direccion     = "";
-		this.telefono      = "";
-		this.carrera       = "";
-		this.plan          = 0;
-		this.matriculaToma = "";
-		this.claveCurso    = "";
+		this.curso     = "";
+		this.nombreCurso      = "";
+		this.semestre          = 0;
 		this.grupo         = 0;
 	}
 	
@@ -35,13 +28,11 @@ public class ReporteAlumnoDP
 		StringTokenizer st = new StringTokenizer(datos, "_");
 		this.matricula     = st.nextToken();
 		this.nombre        = st.nextToken();
-		this.direccion     = st.nextToken();
-		this.telefono      = st.nextToken();
-		this.carrera       = st.nextToken();
-		this.plan          = Integer.parseInt(st.nextToken());
-		this.matriculaToma = st.nextToken();
-		this.claveCurso    = st.nextToken();
+		this.curso     = st.nextToken();
+		this.nombreCurso      = st.nextToken();
 		this.grupo         = Integer.parseInt(st.nextToken());
+		this.semestre          = Integer.parseInt(st.nextToken());
+		this.ndepto = Integer.parseInt(st.nextToken());
 	}
 
 	//Mutators(Setters)
@@ -55,34 +46,24 @@ public class ReporteAlumnoDP
 		this.nombre = nombre;
 	}
 
-	public void setDireccion(String direccion)
+	public void setCurso(String curso)
 	{
-		this.direccion = direccion;
+		this.curso = curso;
 	}
 
-	public void setTelefono(String telefono)
+	public void setNombreCurso(String nombreCurso)
 	{
-		this.telefono = telefono;
+		this.nombreCurso = nombreCurso;
 	}
 
-	public void setCarrera(String carrera)
+	public void setSemestre(int semestre)
 	{
-		this.carrera = carrera;
+		this.semestre = semestre;
 	}
 
-	public void setPlan(int plan)
+	public void setNdepto(int ndepto)
 	{
-		this.plan = plan;
-	}
-
-	public void setMatriculaToma(String matriculaToma)
-	{
-		this.matriculaToma = matriculaToma;
-	}
-
-	public void setClaveCurso(String claveCurso)
-	{
-		this.claveCurso = claveCurso;
+		this.ndepto = ndepto;
 	}
 
 	public void setGrupo(int grupo)
@@ -93,6 +74,6 @@ public class ReporteAlumnoDP
 	//Final String
 	public String toString()
 	{
-		return this.matricula+"_"+this.nombre+"_"+this.direccion+"_"+this.telefono+"_"+this.carrera+"_"+this.plan+"_"+this.matriculaToma+"_"+this.claveCurso+"_"+this.grupo;
+		return this.matricula+"_"+this.nombre+"_"+this.curso+"_"+this.nombreCurso+"_"+this.grupo+"_"+this.semestre+"_"+this.ndepto;
 	}
 }

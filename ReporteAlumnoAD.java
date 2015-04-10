@@ -15,7 +15,7 @@ public class ReporteAlumnoAD{
         String query = "";
         String respuesta = "";
         
-        query = "SELECT * FROM Alumno JOIN Toma ON '"+matricula+"' = Toma.matricula";
+        query = "SELECT Alumno.matricula, Alumno.nombre, Toma.clave_curso, Curso.nombre, Toma.grupo, Curso.semestre, Curso.ndepto FROM Alumno JOIN Toma ON Alumno.matricula = Toma.matricula JOIN Curso ON Toma.clave_curso = Curso.clave WHERE Alumno.matricula = '" + matricula + "'";
         
         reporteAlumnoDP = new ReporteAlumnoDP();
 
@@ -30,13 +30,11 @@ public class ReporteAlumnoAD{
             while(result.next()){
                 reporteAlumnoDP.setMatricula(result.getString(1));
                 reporteAlumnoDP.setNombre(result.getString(2));
-                reporteAlumnoDP.setDireccion(result.getString(3));
-                reporteAlumnoDP.setTelefono(result.getString(4));
-                reporteAlumnoDP.setCarrera(result.getString(5));
-                reporteAlumnoDP.setPlan(result.getInt(6));
-                reporteAlumnoDP.setMatriculaToma(result.getString(7));
-                reporteAlumnoDP.setClaveCurso(result.getString(8));
-                reporteAlumnoDP.setGrupo(result.getInt(9));
+                reporteAlumnoDP.setCurso(result.getString(3));
+                reporteAlumnoDP.setGrupo(result.getInt(5));
+                reporteAlumnoDP.setNombreCurso(result.getString(4));
+                reporteAlumnoDP.setSemestre(result.getInt(6));
+                reporteAlumnoDP.setNdepto(result.getInt(7));
                 
                 respuesta = respuesta + reporteAlumnoDP.toString() + "\n";
             }
