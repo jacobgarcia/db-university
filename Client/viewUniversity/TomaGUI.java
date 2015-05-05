@@ -15,7 +15,7 @@ public class TomaGUI extends JFrame implements ActionListener
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
 	
-	private TomaAD toma = new TomaAD(); 
+	private Conexion conexion = new Conexion();
 
 	public TomaGUI(){
 		super("Inscribir Curso");
@@ -118,6 +118,15 @@ public class TomaGUI extends JFrame implements ActionListener
       	
       	return token;
 	}
+
+	public String tokenizer(String str)
+	{
+		String respuesta = "";
+		StringTokenizer st = new StringTokenizer(str, "*");
+			while(st.hasMoreTokens())
+				respuesta += st.nextToken() + "\n";
+		return respuesta;
+	}
 	
 	private String consultar(String elemento){
 		String resultado = "";
@@ -128,7 +137,18 @@ public class TomaGUI extends JFrame implements ActionListener
 			if(alumno.equals(""))
 					resultado = "ALUMNO_VACIO";
 			else
-				resultado = toma.consultarPor("ALUMNO", alumno);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("ALUMNO_TOMA");
+				conexion.enviarDatos(alumno);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 		
 		if (elemento.equals("CURSO")){
@@ -137,7 +157,18 @@ public class TomaGUI extends JFrame implements ActionListener
 			if(curso.equals(""))
 					resultado = "CURSO_VACIO";
 			else
-				resultado = toma.consultarPor("CURSO", curso);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("CURSO_TOMA");
+				conexion.enviarDatos(curso);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 
 		return resultado;
@@ -244,11 +275,21 @@ public class TomaGUI extends JFrame implements ActionListener
 				print(datos);
 			else
 			{
-				//3) Enviar los datos a la clase AD a través del metodo registrarCurso()
-			    resultado = toma.imparteCurso(datos);
-	
-			    //4) Desplegar el resultado de la operación
-			    print(resultado);
+				//3) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//4) Enviar transacción (imparteCurso)
+				conexion.enviarDatos("tomaCurso"); //transacción
+				conexion.enviarDatos(datos);	//datos de transacción
+				
+				//5) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//6) Cerrar conexión
+				conexion.cerrarConexion();				
+
+				//7) Desplegar el resultado de la operación
+				print(resultado);
 			    
 			    if(!resultado.equals("CURSO_DUPLICADO") && !resultado.equals("CURSO_NO_REGISTRADO") && !resultado.equals("DATOS_GRANDES"))
 			    	//5) Quitar la información de los TextFields
@@ -257,18 +298,35 @@ public class TomaGUI extends JFrame implements ActionListener
 		}
 		
 		 if (e.getSource() == bConsultar){	
-		 	String datos = toma.consultarCursos();
-		 	print(datos);
+		 	String respuesta = "";
+
+			//1) Establecer conexión con el Server
+			conexion.establecerConexion();
+
+			//2) Enviar transacción (En este caso, ConsultarCursos)
+			conexion.enviarDatos("consultarTomados");
+
+			//3) Recibir datos de la transacción
+			String resultado = conexion.recibirDatos();
+
+			//4) Cerrar conexión
+			conexion.cerrarConexion();
+
+			respuesta = tokenizer(resultado);
+
+			print(respuesta);
 		 }
 
 		 if (e.getSource() == bConsultarAlumno){
 		 	String resultado = consultar("ALUMNO");
-	 		print(resultado);
+	 		String respuesta = tokenizer(resultado);
+			print(respuesta);
 		 }	
 		 
 		  if (e.getSource() == bConsultarCurso){
 		 	String resultado = consultar("CURSO");
-	 		print(resultado);
+	 		String respuesta = tokenizer(resultado);
+			print(respuesta);
 		 }				
 	}
 

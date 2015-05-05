@@ -339,12 +339,14 @@ public class ImparteGUI extends JFrame implements ActionListener
 
 		 if (e.getSource() == bConsultarProfesor){
 		 	String resultado = consultar("PROFESOR");
-	 		print(resultado);
+		 	String respuesta = tokenizer(resultado);
+			print(respuesta);
 		 }	
 		 
 		  if (e.getSource() == bConsultarCurso){
 		 	String resultado = consultar("CURSO");
-	 		print(resultado);
+	 		String respuesta = tokenizer(resultado);
+			print(respuesta);
 		  }			
 	}
 
