@@ -15,7 +15,8 @@ public class CursosIUG extends JFrame implements ActionListener
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
 	
-	private CursosAD cursos = new CursosAD(); 
+	private Conexion conexion = new Conexion();
+	 
 
 	public CursosIUG(){
 		super("Curso");
@@ -194,7 +195,20 @@ public class CursosIUG extends JFrame implements ActionListener
 			if(semestre.equals(""))
 					resultado = "SEMESTRE_VACIO";
 			else
-				resultado = cursos.consultarPor("SEMESTRE", semestre);
+
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("SEMESTRE");
+				conexion.enviarDatos(semestre);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
+				
 		}
 		
 		if (elemento.equals("DEPARTAMENTO")){
@@ -203,7 +217,19 @@ public class CursosIUG extends JFrame implements ActionListener
 			if(nombre.equals(""))
 					resultado = "DEPARTAMENTO_VACIO";
 			else
-				resultado = cursos.consultarPor("DEPARTAMENTO", nombre);
+
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("DEPARTAMENTO");
+				conexion.enviarDatos(nombre);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 	
 		if(elemento.equals("CLAVE")){
@@ -212,7 +238,19 @@ public class CursosIUG extends JFrame implements ActionListener
 			if(clave.equals(""))
 					resultado = "CLAVE_VACIA";
 			else
-				resultado = cursos.consultarPor("CLAVE", clave);
+
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("CLAVE");
+				conexion.enviarDatos(clave);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 
 		return resultado;
@@ -284,21 +322,44 @@ public class CursosIUG extends JFrame implements ActionListener
 				print(datos);
 			else
 			{
-				//3) Enviar los datos a la clase AD a través del metodo registrarCurso()
-			    resultado = cursos.registrarCurso(datos);
+
+				//3) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//4) Enviar transacción (RegistrarProfesor)
+				conexion.enviarDatos("registrarCurso"); //transacción
+				conexion.enviarDatos(datos);	//datos de transacción
+				
+				//5) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//6) Cerrar conexión
+				conexion.cerrarConexion();			
 	
-			    //4) Desplegar el resultado de la operación
+			    //7) Desplegar el resultado de la operación
 			    print(resultado);
 			    
 			    if(!resultado.equals("CLAVE_DUPLICADA"))
-			    	//5) Quitar la información de los TextFields
+			    	//8) Quitar la información de los TextFields
 			    	clearFields();	
 			}
 		}
 		
 		if (e.getSource() == bConsultar){	
-			String datos = cursos.consultarCursos();
-			print(datos);
+
+			//1) Establecer conexión con el Server
+			conexion.establecerConexion();
+
+			//2) Enviar transacción (En este caso, ConsultarProfesor)
+			conexion.enviarDatos("consultarCursos");
+
+			//3) Recibir datos de la transacción
+			String resultado = conexion.recibirDatos();
+
+			//4) Cerrar conexión
+			conexion.cerrarConexion();
+
+			print(resultado);
 		}
 
 		if (e.getSource() == bConsultarClave){

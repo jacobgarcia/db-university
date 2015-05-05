@@ -23,6 +23,7 @@ public class ServerBD extends JFrame
 	String mensaje;
 
   private ProfesoresAD profesor = new ProfesoresAD();
+  private CursosAD curso        = new CursosAD();
   
   	// Constructor
 	public ServerBD()
@@ -98,9 +99,52 @@ public class ServerBD extends JFrame
 
  				transaccion = recibirDatos();
 
+        //Start Profesores
         if(transaccion.equals("consultarProfesores")){
           datos = profesor.consultarProfesoresSocket();
           enviarDatos(datos);
+          cerrarConexion();
+        }
+
+        if (transaccion.equals("registrarProfesores")) {
+          // enviarDatos("ENESPERADEDATOS");
+          String resultado="";
+          transaccion = recibirDatos();
+          resultado = profesor.registrarProfesor(transaccion);
+          enviarDatos(resultado);
+          cerrarConexion();
+        }
+
+        if (transaccion.equals("PROFESOR") || transaccion.equals("DEPARTAMENTO") || transaccion.equals("SEXO")) {
+          String tipo = transaccion;
+          transaccion = recibirDatos;
+
+          String resultado = profesor.consultarPor(tipo,transaccion);
+          enviarDatos(resultado);
+          cerrarConexion();
+        }
+
+        //Start Cursos
+        if (transaccion.equals("registrarCurso")){
+          transaccion = recibirDatos();
+          String resultado = curso.registrarCurso(transaccion);
+          enviarDatos(resultado);
+          cerrarConexion();
+
+        }
+
+        if (transaccion.equals("consultarCursos")) {
+           datos = curso.consultarCursos();
+           enviarDatos(datos);
+           cerrarConexion();
+        }
+
+        if (transaccion.equals("SEMESTRE") || transaccion.equals("DEPARTAMENTO") || transaccion.equals("CLAVE")) {
+          String tipo = transaccion;
+          transaccion = recibirDatos;
+
+          String resultado = curso.consultarPor(tipo,transaccion);
+          enviarDatos(resultado);
           cerrarConexion();
         }
       	
