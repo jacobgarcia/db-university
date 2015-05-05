@@ -160,6 +160,15 @@ public class ProfesoresGUI extends JFrame implements ActionListener
       	return token;
 	}
 
+	public String tokenizer(String str)
+	{
+		String respuesta = "";
+		StringTokenizer st = new StringTokenizer(str, "*");
+			while(st.hasMoreTokens())
+				respuesta += st.nextToken() + "\n";
+		return respuesta;
+	}
+
 	private String obtenerDatos(){
 		boolean token = false;
 		int nsalario;
@@ -381,11 +390,9 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 
 				String respuesta = "";
 
-				StringTokenizer st = new StringTokenizer(resultado, "*");
-				while(st.hasMoreTokens())
-					respuesta += st.nextToken() + "\n";
+				respuesta = tokenizer(resultado);
 
-				taDatos.setText(respuesta);
+				print(respuesta);
 
 				/* String datos = profesor.consultarProfesores();
 				print(datos); */
@@ -405,12 +412,14 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 								
 			if (e.getSource() == bConsultarDepto){	
 				String resultado = consultar("DEPARTAMENTO");
-				print(resultado);
+				String respuesta = tokenizer(resultado);
+				print(respuesta);
 			}
 			
 			if (e.getSource() == bConsultarSexo){	
 				String resultado = consultar("SEXO");
-				print(resultado);
+				String respuesta = tokenizer(resultado);
+				print(respuesta);
 			}
 
 		}

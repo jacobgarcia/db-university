@@ -116,7 +116,7 @@ public class ServerBD extends JFrame
 
         if (transaccion.equals("PROFESOR") || transaccion.equals("DEPARTAMENTO") || transaccion.equals("SEXO")) {
           String tipo = transaccion;
-          transaccion = recibirDatos;
+          transaccion = recibirDatos();
 
           String resultado = profesor.consultarPor(tipo,transaccion);
           enviarDatos(resultado);
@@ -140,7 +140,7 @@ public class ServerBD extends JFrame
 
         if (transaccion.equals("SEMESTRE") || transaccion.equals("DEPARTAMENTO") || transaccion.equals("CLAVE")) {
           String tipo = transaccion;
-          transaccion = recibirDatos;
+          transaccion = recibirDatos();
 
           String resultado = curso.consultarPor(tipo,transaccion);
           enviarDatos(resultado);

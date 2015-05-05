@@ -187,7 +187,7 @@ public class ProfesoresAD{
                 profesoresDP.setSexo(result.getString(6));
                 profesoresDP.setClaveDepartamento(result.getInt(7));
                 
-                respuesta = respuesta + profesoresDP.toString() + "\n";
+                respuesta = respuesta + profesoresDP.toString() + "*";
 	            }
 	            
 	            if(respuesta == ""){
