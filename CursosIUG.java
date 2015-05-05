@@ -25,7 +25,7 @@ public class CursosIUG extends JFrame implements ActionListener
 		tfNombre   		= new JTextField();
 		tfNumeroDepto			= new JTextField();
 		tfSemestre	= new JTextField();
-		taDatos    		= new JTextArea(12, 53);
+		taDatos    		= new JTextArea(15, 53);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		
@@ -220,7 +220,7 @@ public class CursosIUG extends JFrame implements ActionListener
 	
 	private void print(String str){
 		
-		if(str.equals("DEPARTAMENTO_VACIO")||(str.equals("SEMESTRE_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")))
+		if(str.equals("DEPARTAMENTO_VACIO")||(str.equals("SEMESTRE_VACIO"))||(str.equals("CLAVE_NO_ENCONTRADA"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("NO_NUMERICO"))||(str.equals("NEGATIVO"))||(str.equals("CLAVE_VACIA"))|| (str.equals("SEMESTRE_NO_REGISTRADO")) || (str.equals("CLAVE_DUPLICADA")) || (str.equals("CURSO_NO_REGISTRADO")) || (str.equals("DEPARTAMENTO_NO_ENCONTRADO")) || (str.equals("CLAVE_NO_REGISTRADA")) ||(str.equals("DATOS_GRANDES")))
 		{
 			if(str.equals("DEPARTAMENTO_VACIO"))
 				taDatos.setText("El campo 'Número de Departamento' se encuentra vacío.");
@@ -244,7 +244,7 @@ public class CursosIUG extends JFrame implements ActionListener
 				taDatos.setText("El campo 'Clave' se encuentra vacío.");
 			
 			if(str.equals("CLAVE_DUPLICADA"))
-				taDatos.setText("El curso '" + tfClave.getText() + "' ya se encuentra en la base de datos. \nPor favor introduce otra clave de curso.");
+				taDatos.setText("El curso con clave '" + tfClave.getText() + "' o nombre '" + tfNombre.getText() + "' ya se encuentra en la base de datos. \nPor favor introduce otra clave o nombre de curso.");
 			
 			if(str.equals("SEMESTRE_NO_REGISTRADO"))
 				taDatos.setText("No se tienen cursos registrados para el semestre '" + tfSemestre.getText() + "'.");
@@ -257,6 +257,10 @@ public class CursosIUG extends JFrame implements ActionListener
 				
 			if(str.equals("CLAVE_NO_REGISTRADA"))
 				taDatos.setText("No se tiene ningún curso registrado bajo la clave '" + tfClave.getText() + "'.");
+				
+			if(str.equals("DATOS_GRANDES"))
+				taDatos.setText("Algún campo contiene información con demasiados caracteres. \nPor favor revisa de nuevo la información y realiza los cambios donde sean necesarios.");
+				
 				
 		}
 		else
@@ -290,7 +294,7 @@ public class CursosIUG extends JFrame implements ActionListener
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
 			    
-			    if(!resultado.equals("CLAVE_DUPLICADA"))
+			    if(!resultado.equals("CLAVE_DUPLICADA") && !resultado.equals("CURSO_NO_REGISTRADO") && !resultado.equals("DATOS_GRANDES"))
 			    	//5) Quitar la información de los TextFields
 			    	clearFields();	
 			}

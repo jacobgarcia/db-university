@@ -36,10 +36,12 @@ public class ProfesoresAD{
 		}
 		catch(SQLException sqle){
 			System.out.println("Error: " + sqle);
-            	if(sqle.getErrorCode() == 1452)
+				if(sqle.getErrorCode() == 1062)
+            		respuesta = "PROFESOR_DUPLICADO";
+            	else if(sqle.getErrorCode() == 1452)
             		respuesta = "DEPARTAMENTO_NO_REGISTRADO";
             	else
-            		respuesta = "PROFESOR_DUPLICADO";
+            		respuesta = "DATOS_GRANDES";
 		}
 		return respuesta;
 	}

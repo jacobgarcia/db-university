@@ -31,12 +31,12 @@ public class GradosIUG extends JFrame implements ActionListener
 		tfClave 		= new JTextField();
 		tfGrado   		= new JTextField();
 		tfDescripcion	= new JTextField();
-		taDatos    		= new JTextArea(12, 45);
+		taDatos    		= new JTextArea(18, 45);
 		p1  	   		= new JPanel();
 		p2  	   		= new JPanel();
 		
 		//Agregar los atributos a los paneles
-		p1.setLayout(new GridLayout(6, 2));
+		p1.setLayout(new GridLayout(5, 2));
 		
 		p1.add(new JLabel("Clave del Profesor"));
 		p1.add(tfClave);
@@ -169,7 +169,7 @@ public class GradosIUG extends JFrame implements ActionListener
 	
 	private void print(String str){
 		
-		if((str.equals("PROFESOR_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("PROFESOR_VACIO")) || (str.equals("GRADO_DUPLICADO")) || (str.equals("PROFESOR_NO_REGISTRADO")))
+		if((str.equals("PROFESOR_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("PROFESOR_VACIO")) || (str.equals("GRADO_DUPLICADO")) || (str.equals("PROFESOR_NO_REGISTRADO")) ||(str.equals("DATOS_GRANDES")))
 		{	
 			if(str.equals("PROFESOR_NO_ENCONTRADO"))
 				taDatos.setText("La clave de profesor '" + tfClave.getText() + "' no se encontró en la base de datos.");
@@ -187,7 +187,11 @@ public class GradosIUG extends JFrame implements ActionListener
 				taDatos.setText("El grado académico '" + tfGrado.getText() + "' para el profesor '" + tfClave.getText() + "' ya se encuentra registrado. \nPor favor introduce datos válidos distintos.");
 				
 			if(str.equals("PROFESOR_NO_REGISTRADO"))
-				taDatos.setText("El profesor con clave '" + tfDescripcion.getText() + "' no se encuentra en la base de datos. \nPor favor introduce un Profesor con una clave válida.");
+				taDatos.setText("El profesor con clave '" + tfClave.getText() + "' no se encuentra en la base de datos. \nPor favor introduce un Profesor con una clave válida.");
+				
+			if(str.equals("DATOS_GRANDES"))
+				taDatos.setText("Algún campo contiene información con demasiados caracteres. \nPor favor revisa de nuevo la información y realiza los cambios donde sean necesarios.");
+				
 
 		}
 		else
@@ -221,7 +225,7 @@ public class GradosIUG extends JFrame implements ActionListener
 			    //4) Desplegar el resultado de la operación
 			    print(resultado);
 			    
-			    if(!resultado.equals("GRADO_DUPLICADO"))
+			    if(!resultado.equals("GRADO_DUPLICADO")&& !resultado.equals("PROFESOR_NO_REGISTRADO")&& !resultado.equals("DATOS_GRANDES"))
 			    	//5) Quitar la información de los TextFields
 			    	clearFields();	
 			}
