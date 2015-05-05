@@ -13,7 +13,7 @@ public class ProfesoresAD{
 	public ProfesoresAD(){
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-			conexion = DriverManager.getConnection("jdbc:mysql://localhost/Universidad?user=root");
+			conexion = DriverManager.getConnection("jdbc:mysql://localhost/Universidad?user=root&password=admin");
             
 			System.out.println("Conexión exitósa a la Base de Datos Universidad, Driver JDBC Tipo 4");
 		}
