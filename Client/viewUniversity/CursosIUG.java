@@ -186,6 +186,15 @@ public class CursosIUG extends JFrame implements ActionListener
         return datos;
 	}
 
+	public String tokenizer(String str)
+	{
+		String respuesta = "";
+		StringTokenizer st = new StringTokenizer(str, "*");
+			while(st.hasMoreTokens())
+				respuesta += st.nextToken() + "\n";
+		return respuesta;
+	}
+
 	private String consultar(String elemento){
 		String resultado = "";
 		
@@ -222,7 +231,7 @@ public class CursosIUG extends JFrame implements ActionListener
 				conexion.establecerConexion();
 
 				//2) Enviar transacción (En este caso, ConsultarProfesor)
-				conexion.enviarDatos("DEPARTAMENTO");
+				conexion.enviarDatos("DEPARTAMENTO_CURSO");
 				conexion.enviarDatos(nombre);
 
 				//3) Recibir datos de la transacción
@@ -380,7 +389,9 @@ public class CursosIUG extends JFrame implements ActionListener
 		
 		if (e.getSource() == bConsultarDepartamento){	
 			String resultado = consultar("DEPARTAMENTO");
-			print(resultado);
+			String respuesta = tokenizer(resultado);
+			print(respuesta);
+		 				
 		}
 				
 	}
