@@ -14,7 +14,7 @@ public class AlumnosGUI extends JFrame implements ActionListener
 	private JTextArea  taDatos;
 	public JPanel      p1,p2;
 
-	private AlumnosAD alumnos = new AlumnosAD();
+	private Conexion conexion = new Conexion();
 
 	public AlumnosGUI(){
 		super("Alumnos");
@@ -131,6 +131,15 @@ public class AlumnosGUI extends JFrame implements ActionListener
       	}
       	
       	return token;
+	}
+
+	public String tokenizer(String str)
+	{
+		String respuesta = "";
+		StringTokenizer st = new StringTokenizer(str, "*");
+			while(st.hasMoreTokens())
+				respuesta += st.nextToken() + "\n";
+		return respuesta;
 	}
 
 	private String obtenerDatos(){
