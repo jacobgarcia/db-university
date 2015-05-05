@@ -30,7 +30,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		tfTrabajaD     = new JTextField();
 		tfClave        = new JTextField();
 		tfSexo 		   = new JTextField();
-		taDatos		   = new JTextArea(9, 33);
+		taDatos		   = new JTextArea(10, 58);
 		p1			   = new JPanel();
 		p2             = new JPanel();
 
@@ -250,7 +250,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 		
 	private void print(String str){
 		
-		if((str.equals("PROFESOR_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("PROFESOR_VACIO")) || (str.equals("PROFESOR_DUPLICADO")) || (str.equals("DEPARTAMENTO_NO_REGISTRADO"))|| (str.equals("ERROR")) || (str.equals("DEPARTAMENTO_VACIO")) || (str.equals("SEXO_NO_REGISTRADO")))
+		if((str.equals("PROFESOR_NO_ENCONTRADO"))||(str.equals("CAMPO_VACIO"))||(str.equals("TOKEN"))||(str.equals("PROFESOR_VACIO")) || (str.equals("PROFESOR_DUPLICADO")) || (str.equals("DEPARTAMENTO_NO_REGISTRADO"))|| (str.equals("ERROR")) || (str.equals("DEPARTAMENTO_VACIO")) || (str.equals("SEXO_NO_REGISTRADO"))  ||(str.equals("DATOS_GRANDES"))  ||(str.equals("NO_NUMERICO"))  ||(str.equals("NEGATIVO")))
 		{	
 			if(str.equals("PROFESOR_NO_ENCONTRADO"))
 				taDatos.setText("La clave de profesor '" + tfClave.getText() + "' no se encontró en la base de datos.");
@@ -278,6 +278,14 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 
 			if (str.equals("SEXO_NO_REGISTRADO"))
 				taDatos.setText("No existen registros de profesores con sexo '" + combo.getSelectedItem().toString() + "' no existen en la base de datos.");
+				
+							
+			if(str.equals("NEGATIVO") || str.equals("NO_NUMERICO"))
+				taDatos.setText("Los campos 'Salario' y 'Número de Departamento' deben contener un número válido entero positivo.\nPor favor introduce nuevos datos válidos.");	
+											
+							
+			if(str.equals("DATOS_GRANDES"))
+				taDatos.setText("Algún campo contiene información con demasiados caracteres. \nPor favor revisa de nuevo la información y realiza los cambios donde sean necesarios.");
 
 		}
 		else
@@ -308,7 +316,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 					//4) Desplegar el resultado de la operación
 					print(resultado);
 					
-					if(!resultado.equals("PROFESOR_DUPLICADO") || !resultado.equals("DEPARTAMENTO_NO_REGISTRADO"))
+					if(!resultado.equals("PROFESOR_DUPLICADO") && !resultado.equals("DEPARTAMENTO_NO_REGISTRADO") && !resultado.equals("DATOS_GRANDES"))
 						//5) Quitar la información de los TextFields
 						clearFields();	
 				}

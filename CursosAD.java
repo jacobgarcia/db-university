@@ -34,10 +34,13 @@ public class CursosAD{
         }
         catch(SQLException sqle){
             	System.out.println("Error: " + sqle);
-            	if(sqle.getErrorCode() == 1452)
+            	if(sqle.getErrorCode() == 1062)
+            		respuesta = "CLAVE_DUPLICADA";
+            	else if(sqle.getErrorCode() == 1452)
             		respuesta = "CURSO_NO_REGISTRADO";
             	else
-            		respuesta = "CLAVE_DUPLICADA";
+            		respuesta = "DATOS_GRANDES";
+
         }
         return respuesta;
 	}

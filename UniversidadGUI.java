@@ -17,10 +17,9 @@ import java.awt.event.*;
 public class UniversidadGUI extends JFrame implements ActionListener
 {
 	private JMenuBar mbProyecto;
-	private JMenu mProfesores, mDepartamentos, mAlumnos, mCursos;
-	private JMenuItem miRegistroProfesor, miFormacion, miRegistroDepartamento, miAsignar, miRegistroAlumno, miInscripcion, miRegistroCurso;
+	private JMenu mProfesores, mDepartamentos, mAlumnos, mCursos, mEntidades, mReportes, mSalir;
+	private JMenuItem miRegistroProfesor, miFormacion, miRegistroDepartamento, miAsignar, miRegistroAlumno, miInscripcion, miRegistroCurso, miReporteAlumno, miReporteCurso, miReporteGrupo, miSalir;
 	private JPanel panel;
-	private JMenuItem miEspiralRectangulo, miEspiralCirculo, miCubo, miEspiralCubo, miArticulos;
 	
 	private UniversidadAD universidad = new UniversidadAD();
 	private GradosIUG grados = new GradosIUG();
@@ -28,6 +27,11 @@ public class UniversidadGUI extends JFrame implements ActionListener
 	private CursosIUG cursos = new CursosIUG();
 	private ProfesoresGUI profesor = new ProfesoresGUI();
 	private AlumnosGUI alumno = new AlumnosGUI();
+	private ImparteGUI imparte = new ImparteGUI();
+	private TomaGUI toma = new TomaGUI();
+	private ReporteAlumnoGUI reporteAlumno = new ReporteAlumnoGUI();
+	private ReporteCursoGUI reporteCurso = new ReporteCursoGUI();
+	private ReporteGrupoGUI reporteGrupo = new ReporteGrupoGUI();
 	
 	public UniversidadGUI()
 	{
@@ -46,7 +50,7 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		miAsignar = new JMenuItem("Asignación de Cursos");
 		miAsignar.addActionListener(this);
 					
-		
+	
 		
 		mDepartamentos = new JMenu("Departamentos");
 		miRegistroDepartamento = new JMenuItem("Registro de Departamentos");
@@ -66,6 +70,26 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		mCursos = new JMenu("Cursos");
 		miRegistroCurso = new JMenuItem("Registro de Cursos");
 		miRegistroCurso.addActionListener(this);
+
+		miSalir = new JMenuItem("Salir");
+		miSalir.addActionListener(this);
+		
+		mEntidades = new JMenu("Administración de Entidades");
+
+		mReportes = new JMenu("Generación de Reportes");
+
+		miReporteAlumno = new JMenuItem("Materias que Cursa un Alumno");
+		miReporteAlumno.addActionListener(this);
+
+		miReporteCurso = new JMenuItem("Alumnos que Llevan un Curso");
+		miReporteCurso.addActionListener(this);
+
+		miReporteGrupo = new JMenuItem("Lista del Grupo de un Profesor");
+		miReporteGrupo.addActionListener(this);
+
+
+		mSalir = new JMenu("Opciones");
+		
 		
 		//Panel
 		panel = new JPanel();
@@ -79,17 +103,28 @@ public class UniversidadGUI extends JFrame implements ActionListener
 		
 		mProfesores.add(miRegistroProfesor);
 		mProfesores.add(miFormacion);
+		mProfesores.add(miAsignar);
 		
 		mCursos.add(miRegistroCurso);
 
-		mbProyecto.add(mProfesores);
-		mbProyecto.add(mDepartamentos);
-		mbProyecto.add(mCursos);
-		mbProyecto.add(mAlumnos);
+		mEntidades.add(mProfesores);
+		mEntidades.add(mDepartamentos);
+		mEntidades.add(mCursos);
+		mEntidades.add(mAlumnos);
+
+		mReportes.add(miReporteAlumno);
+		mReportes.add(miReporteCurso);
+		mReportes.add(miReporteGrupo);
+		
+		mSalir.add(miSalir);
+		
+		mbProyecto.add(mEntidades);
+		mbProyecto.add(mReportes);
+		mbProyecto.add(mSalir);
 		
 		//2) Visualizar Frame
 		setJMenuBar(mbProyecto);
-		setSize(720, 400);
+		setSize(820, 470);
 		setVisible(true);
 		
 	}
@@ -155,6 +190,69 @@ public class UniversidadGUI extends JFrame implements ActionListener
 			add(panel);
 			setVisible(true);
 		}
+
+		if(event.getSource() == miAsignar)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = imparte.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+		
+		if(event.getSource() == miInscripcion)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = toma.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+
+		if(event.getSource() == miReporteAlumno)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = reporteAlumno.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+
+		if(event.getSource() == miReporteCurso)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = reporteCurso.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+
+		if(event.getSource() == miReporteGrupo)
+		{
+			if(panel != null)
+			{
+				panel.setVisible(false);
+			}
+			panel = reporteGrupo.getPanel2();
+			panel.setVisible(true);
+			add(panel);
+			setVisible(true);
+		}
+		
+		if (event.getSource() == miSalir)
+			System.exit(0);
 	}
 	
 	public static void main(String args[])
