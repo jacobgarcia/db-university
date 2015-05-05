@@ -204,7 +204,18 @@ public class AlumnosGUI extends JFrame implements ActionListener
 			if(matricula.equals(""))
 					resultado = "ALUMNO_VACIO";
 			else
-				resultado = alumnos.consultarPor("ALUMNO", matricula);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("ALUMNO");
+				conexion.enviarDatos(matricula);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 		
 		if(elemento.equals("CARRERA")){
@@ -213,7 +224,18 @@ public class AlumnosGUI extends JFrame implements ActionListener
 			if(carrera.equals(""))
 					resultado = "CARRERA_VACIO";
 			else
-				resultado = alumnos.consultarPor("CARRERA", carrera);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("CARRERA");
+				conexion.enviarDatos(carrera);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 		
 		return resultado;
@@ -275,21 +297,48 @@ public class AlumnosGUI extends JFrame implements ActionListener
 				else
 				{
 					taDatos.setText(datos);
-					//3) Enviar los datos a la clase AD a través del metodo registrarGrado()
-					resultado = alumnos.registrarAlumno(datos);
+
+					//3) Establecer conexión con el Server
+					conexion.establecerConexion();
+
+					//4) Enviar transacción (RegistrarAlumno)
+					conexion.enviarDatos("registrarAlumno"); //transacción
+					conexion.enviarDatos(datos);	//datos de transacción
+					
+					//5) Recibir datos de la transacción
+					resultado = conexion.recibirDatos();
+
+					//6) Cerrar conexión
+					conexion.cerrarConexion();				
 	
-					//4) Desplegar el resultado de la operación
+					//7) Desplegar el resultado de la operación
 					print(resultado);
 					
 					if(!resultado.equals("ALUMNO_DUPLICADO") && !resultado.equals("ALUMNO_NO_REGISTRADO")&& !resultado.equals("DATOS_GRANDES"))
-						//5) Quitar la información de los TextFields
+						//8) Quitar la información de los TextFields
 						clearFields();	
 				}
 		}
 
-		if (e.getSource() == bConsultar){	
-			String datos = alumnos.consultarAlumnos();
-			print(datos);
+		if (e.getSource() == bConsultar){
+
+			String respuesta = "";
+
+			//1) Establecer conexión con el Server
+			conexion.establecerConexion();
+
+			//2) Enviar transacción (En este caso, ConsultarProfesor)
+			conexion.enviarDatos("consultarAlumnos");
+
+			//3) Recibir datos de la transacción
+			String resultado = conexion.recibirDatos();
+
+			//4) Cerrar conexión
+			conexion.cerrarConexion();
+
+			respuesta = tokenizer(resultado);
+
+			print(respuesta);
 		}
 
 		if (e.getSource() == bConsultarMatricula){
@@ -305,7 +354,8 @@ public class AlumnosGUI extends JFrame implements ActionListener
 
 		if (e.getSource() == bConsultarCarrera){	
 				String resultado = consultar("CARRERA");
-				print(resultado);
+				String respuesta = tokenizer(resultado);
+				print(respuesta);
 			}
 	}
 

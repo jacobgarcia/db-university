@@ -390,17 +390,9 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 				//4) Cerrar conexión
 				conexion.cerrarConexion();
 
-				StringTokenizer st = new StringTokenizer(resultado, "*");
-				
-				while(st.hasMoreTokens())
-					respuesta += st.nextToken() + "\n";
-
 				respuesta = tokenizer(resultado);
 
 				print(respuesta);
-
-				/* String datos = profesor.consultarProfesores();
-				print(datos); */
 			}
 	
 			
