@@ -103,6 +103,24 @@ public class ServerBD extends JFrame
           enviarDatos(datos);
           cerrarConexion();
         }
+
+        if (transaccion.equals("registrarProfesores")) {
+          // enviarDatos("ENESPERADEDATOS");
+          String resultado="";
+          transaccion = recibirDatos();
+          resultado = profesor.registrarProfesor(transaccion);
+          enviarDatos(resultado);
+          cerrarConexion();
+        }
+
+        if (transaccion.equals("PROFESOR") || transaccion.equals("DEPARTAMENTO") || transaccion.equals("SEXO")) {
+          String tipo = transaccion;
+          transaccion = recibirDatos;
+
+          resultado = profesor.consultarPor(tipo,transaccion);
+          enviarDatos(resultado);
+          cerrarConexion();
+        }
       	
       			taDatos.append("\nTransacción realizada exitósamente " + transaccion + "\n"); 
       		}

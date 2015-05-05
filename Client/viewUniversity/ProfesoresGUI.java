@@ -221,7 +221,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
         return datos;
 	}
 	
-	/* private String consultar(String elemento){
+	 private String consultar(String elemento){
 		String resultado = "";
 	
 		if(elemento.equals("PROFESOR")){
@@ -230,7 +230,18 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 			if(clave.equals(""))
 					resultado = "PROFESOR_VACIO";
 			else
-				resultado = profesor.consultarPor("PROFESOR", clave);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("PROFESOR");
+				conexion.enviarDatos(clave);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 		
 		if(elemento.equals("DEPARTAMENTO")){
@@ -239,16 +250,41 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 			if(ndepto.equals(""))
 					resultado = "DEPARTAMENTO_VACIO";
 			else
-				resultado = profesor.consultarPor("DEPARTAMENTO", ndepto);
+
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("DEPARTAMENTO");
+				conexion.enviarDatos(ndepto);				
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 		
 		if(elemento.equals("SEXO")){
 			String sexo = combo.getSelectedItem().toString();
-			resultado = profesor.consultarPor("SEXO", sexo);
+
+			//1) Establecer conexión con el Server
+			conexion.establecerConexion();
+
+			//2) Enviar transacción (En este caso, ConsultarProfesor)
+			conexion.enviarDatos("SEXO");
+			conexion.enviarDatos(sexo);
+
+			//3) Recibir datos de la transacción
+			resultado = conexion.recibirDatos();
+
+			//4) Cerrar conexión
+			conexion.cerrarConexion();
+			// resultado = profesor.consultarPor("SEXO", sexo);
 		}
 
 		return resultado;
-	} */ 
+	}  
 		
 	private void print(String str){
 		
@@ -294,7 +330,9 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 
 		public void actionPerformed(ActionEvent e){
 			
-			/*if (e.getSource() == bRegistrar){
+			if (e.getSource() == bRegistrar){
+
+
 				//1) Obtener datos de los TextFields
 		        String datos = obtenerDatos();
 		        String resultado = "";
@@ -304,17 +342,28 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 					print(datos);
 				else {
 					taDatos.setText(datos);
-					//3) Enviar los datos a la clase AD a través del metodo registrarGrado()
-					resultado = profesor.registrarProfesor(datos);
+					
+					//3) Establecer conexión con el Server
+					conexion.establecerConexion();
+
+					//4) Enviar transacción (RegistrarProfesor)
+					conexion.enviarDatos("registrarProfesores"); //transacción
+					conexion.enviarDatos(datos);	//datos de transacción
+					
+					//5) Recibir datos de la transacción
+					resultado = conexion.recibirDatos();
+
+					//6) Cerrar conexión
+					conexion.cerrarConexion();				
 	
-					//4) Desplegar el resultado de la operación
+					//7) Desplegar el resultado de la operación
 					print(resultado);
 					
 					if(!resultado.equals("PROFESOR_DUPLICADO") || !resultado.equals("DEPARTAMENTO_NO_REGISTRADO"))
-						//5) Quitar la información de los TextFields
+						//8) Quitar la información de los TextFields
 						clearFields();	
 				}
-			}*/
+			}
 			
 					
 			if (e.getSource() == bConsultar){	
