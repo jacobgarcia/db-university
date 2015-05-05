@@ -13,7 +13,7 @@ import javax.swing.*;
 public class Conexion
 {
   	private JTextField tfDatos = new JTextField();
- 	private JButton bEnvia;
+ 	  private JButton bEnvia;
   	private JTextArea taDatos = new JTextArea();
   	private JPanel p1 = new JPanel();
   	private JPanel p2 = new JPanel();

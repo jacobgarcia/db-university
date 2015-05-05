@@ -318,6 +318,8 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 			
 					
 			if (e.getSource() == bConsultar){	
+				String respuesta = "";
+
 				//1) Establecer conexión con el Server
 				conexion.establecerConexion();
 
@@ -330,9 +332,8 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 				//4) Cerrar conexión
 				conexion.cerrarConexion();
 
-				String respuesta = "";
-
 				StringTokenizer st = new StringTokenizer(resultado, "*");
+				
 				while(st.hasMoreTokens())
 					respuesta += st.nextToken() + "\n";
 
