@@ -23,6 +23,7 @@ public class ServerBD extends JFrame
 	String mensaje;
 
   private ProfesoresAD profesor = new ProfesoresAD();
+  private CursosAD curso        = new CursosAD();
   
   	// Constructor
 	public ServerBD()
@@ -98,6 +99,7 @@ public class ServerBD extends JFrame
 
  				transaccion = recibirDatos();
 
+        //Start Profesores
         if(transaccion.equals("consultarProfesores")){
           datos = profesor.consultarProfesoresSocket();
           enviarDatos(datos);
@@ -117,7 +119,31 @@ public class ServerBD extends JFrame
           String tipo = transaccion;
           transaccion = recibirDatos;
 
-          resultado = profesor.consultarPor(tipo,transaccion);
+          String resultado = profesor.consultarPor(tipo,transaccion);
+          enviarDatos(resultado);
+          cerrarConexion();
+        }
+
+        //Start Cursos
+        if (transaccion.equals("registrarCurso")){
+          transaccion = recibirDatos();
+          String resultado = curso.registrarCurso(transaccion);
+          enviarDatos(resultado);
+          cerrarConexion();
+
+        }
+
+        if (transaccion.equals("consultarCursos")) {
+           datos = curso.consultarCursos();
+           enviarDatos(datos);
+           cerrarConexion();
+        }
+
+        if (transaccion.equals("SEMESTRE") || transaccion.equals("DEPARTAMENTO") || transaccion.equals("CLAVE")) {
+          String tipo = transaccion;
+          transaccion = recibirDatos;
+
+          String resultado = curso.consultarPor(tipo,transaccion);
           enviarDatos(resultado);
           cerrarConexion();
         }
