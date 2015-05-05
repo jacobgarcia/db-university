@@ -22,7 +22,7 @@ public class GradosIUG extends JFrame implements ActionListener
 	private JTextArea  taDatos;
 	public  JPanel 	   p1, p2;
 	
-	private GradosAD grados = new GradosAD(); 
+	private Conexion conexion = new Conexion();
 
 	public GradosIUG(){
 		super("Grados Académicos");
@@ -122,6 +122,15 @@ public class GradosIUG extends JFrame implements ActionListener
       	
       	return token;
 	}
+
+	public String tokenizer(String str)
+	{
+		String respuesta = "";
+		StringTokenizer st = new StringTokenizer(str, "*");
+			while(st.hasMoreTokens())
+				respuesta += st.nextToken() + "\n";
+		return respuesta;
+	}
 	
 	private String obtenerDatos(){
 		boolean token = false;
@@ -161,7 +170,18 @@ public class GradosIUG extends JFrame implements ActionListener
 			if(clave.equals(""))
 					resultado = "PROFESOR_VACIO";
 			else
-				resultado = grados.consultarPor("PROFESOR", clave);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("PROFESOR_GRADO");
+				conexion.enviarDatos(clave);				
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 
 		return resultado;
@@ -219,11 +239,22 @@ public class GradosIUG extends JFrame implements ActionListener
 				print(datos);
 			else
 			{
-				//3) Enviar los datos a la clase AD a través del metodo registrarGrado()
-			    resultado = grados.registrarGrado(datos);
-	
-			    //4) Desplegar el resultado de la operación
-			    print(resultado);
+
+				//3) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//4) Enviar transacción (RegistrarGrado)
+				conexion.enviarDatos("registrarGrado"); //transacción
+				conexion.enviarDatos(datos);	//datos de transacción
+				
+				//5) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//6) Cerrar conexión
+				conexion.cerrarConexion();				
+
+				//7) Desplegar el resultado de la operación
+				print(resultado);
 			    
 			    if(!resultado.equals("GRADO_DUPLICADO")&& !resultado.equals("PROFESOR_NO_REGISTRADO")&& !resultado.equals("DATOS_GRANDES"))
 			    	//5) Quitar la información de los TextFields
@@ -232,8 +263,23 @@ public class GradosIUG extends JFrame implements ActionListener
 		}
 		
 		if (e.getSource() == bConsultar){	
-			String datos = grados.consultarGrados();
-			print(datos);
+			String respuesta = "";
+
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarGrados)
+				conexion.enviarDatos("consultarGrados");
+
+				//3) Recibir datos de la transacción
+				String resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
+
+				respuesta = tokenizer(resultado);
+
+				print(respuesta);
 		}
 
 		if (e.getSource() == bConsultarClave){
