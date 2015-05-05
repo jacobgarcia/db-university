@@ -343,7 +343,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 			}
 	
 			
-			/*if (e.getSource() == bConsultarClave){
+			if (e.getSource() == bConsultarClave){
 				String resultado = consultar("PROFESOR");
 				if(resultado.equals("PROFESOR_VACIO")||(resultado.equals("ERROR"))||(resultado.equals("PROFESOR_NO_ENCONTRADO")))
 					print(resultado);
@@ -362,7 +362,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 			if (e.getSource() == bConsultarSexo){	
 				String resultado = consultar("SEXO");
 				print(resultado);
-			}*/
+			}
 
 		}
 
