@@ -15,7 +15,7 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 	private JTextArea  taDatos;
 	public JPanel 	   p1, p2;
 	
-	private DepartamentosAD departamentos = new DepartamentosAD(); 
+	private Conexion conexion = new Conexion();
 	
 	/* MySQL Date format */
     private SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
@@ -23,7 +23,9 @@ public class DepartamentosIUG extends JFrame implements ActionListener
     private Timer clock;
     
     private JComboBox combo;
-   private String opciones[] = departamentos.opciones();
+	//Pedir datos del comboBox al servidor
+
+    private String opciones[] = {"Prueba1" , "Prueba2"};
    
 	public DepartamentosIUG(){
 		super("Departamento");
@@ -120,6 +122,22 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 		tfNumeroDepto.setText("");
 		tfNombre.setText("");
 	}
+
+	/*public String comboBoxConsulta(){
+		//1) Establecer conexión con el Server
+		conexion.establecerConexion();
+
+		//2) Enviar transacción (En este caso, ConsultarProfesor)
+		conexion.enviarDatos("consulta_ComboBox_Departamento");
+
+		//3) Recibir datos de la transacción
+		String resultado = conexion.recibirDatos();
+
+		//4) Cerrar conexión
+		conexion.cerrarConexion();
+
+		return resultado;
+	}*/
 	
 	public void habilitarBotones(boolean value){
 		bRegistrar.setEnabled(value); 
@@ -171,6 +189,15 @@ public class DepartamentosIUG extends JFrame implements ActionListener
       	}
       	
       	return token;
+	}
+
+	public String tokenizer(String str)
+	{
+		String respuesta = "";
+		StringTokenizer st = new StringTokenizer(str, "*");
+			while(st.hasMoreTokens())
+				respuesta += st.nextToken() + "\n";
+		return respuesta;
 	}
 	
 	private String obtenerDatos(){
@@ -227,7 +254,18 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 			if(administrador.equals("N/A"))
 					resultado = "ADMINISTRADOR_VACIO";
 			else
-				resultado = departamentos.consultarPor("ADMINISTRADOR", administrador);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("ADMINISTRADOR");
+				conexion.enviarDatos(administrador);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 		
 		if (elemento.equals("NOMBRE")){
@@ -236,7 +274,18 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 			if(nombre.equals(""))
 					resultado = "NOMBRE_VACIO";
 			else
-				resultado = departamentos.consultarPor("NOMBRE", nombre);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("NOMBRE_DEPARTAMENTO");
+				conexion.enviarDatos(nombre);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 	
 		if(elemento.equals("DEPARTAMENTO")){
@@ -245,7 +294,18 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 			if(numeroDepto.equals(""))
 					resultado = "DEPARTAMENTO_VACIO";
 			else
-				resultado = departamentos.consultarPor("DEPARTAMENTO", numeroDepto);
+				//1) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//2) Enviar transacción (En este caso, ConsultarProfesor)
+				conexion.enviarDatos("DEPARTAMENTO");
+				conexion.enviarDatos(numeroDepto);
+
+				//3) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//4) Cerrar conexión
+				conexion.cerrarConexion();
 		}
 
 		return resultado;
@@ -318,21 +378,47 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 				print(datos);
 			else
 			{
-				//3) Enviar los datos a la clase AD a través del metodo registrarDepartamento()
-			    resultado = departamentos.registrarDepartamento(datos);
-	
-			    //4) Desplegar el resultado de la operación
-			    print(resultado);
+				
+				//3) Establecer conexión con el Server
+				conexion.establecerConexion();
+
+				//4) Enviar transacción (RegistrarDepartamento)
+				conexion.enviarDatos("registrarDepartamento"); //transacción
+				conexion.enviarDatos(datos);	//datos de transacción
+				
+				//5) Recibir datos de la transacción
+				resultado = conexion.recibirDatos();
+
+				//6) Cerrar conexión
+				conexion.cerrarConexion();				
+
+				//7) Desplegar el resultado de la operación
+				print(resultado);
 			    
 			    if(!resultado.equals("DEPARTAMENTO_DUPLICADO") && !resultado.equals("PROFESOR_NO_REGISTRADO") && !resultado.equals("DATOS_GRANDES"))
-			    	//5) Quitar la información de los TextFields
+			    	//8) Quitar la información de los TextFields
 			    	clearFields();	
 			}
 		}
 		
 		if (e.getSource() == bConsultar){	
-			String datos = departamentos.consultarDepartamentos();
-			print(datos);
+			String respuesta = "";
+
+			//1) Establecer conexión con el Server
+			conexion.establecerConexion();
+
+			//2) Enviar transacción (En este caso, ConsultarProfesor)
+			conexion.enviarDatos("consultarDepartamentos");
+
+			//3) Recibir datos de la transacción
+			String resultado = conexion.recibirDatos();
+
+			//4) Cerrar conexión
+			conexion.cerrarConexion();
+
+			respuesta = tokenizer(resultado);
+
+			print(respuesta);
 		}
 
 		if (e.getSource() == bConsultarNumeroDepto){
@@ -348,6 +434,8 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 		
 		if (e.getSource() == bConsutlarAdministrador){	
 			String resultado = consultar("ADMINISTRADOR");
+			String respuesta = tokenizer(resultado);
+
 			print(resultado);
 		}
 		
@@ -382,7 +470,22 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 			String admin = combo.getSelectedItem().toString();
 			String ndepto = tfNumeroDepto.getText();
 			
-			String resultado = departamentos.cambiarAdministrador(admin, ndepto);
+
+			//3) Establecer conexión con el Server
+			conexion.establecerConexion();
+
+			//4) Enviar transacción (CambiarAdmin)
+			conexion.enviarDatos("cambiarAdministrador"); //transacción
+			conexion.enviarDatos(admin);	//datos de transacción
+			conexion.enviarDatos(ndepto);	//datos de transacción
+			
+			//5) Recibir datos de la transacción
+			String resultado = conexion.recibirDatos();
+
+			//6) Cerrar conexión
+			conexion.cerrarConexion();		
+
+			//7) Desplegar el resultado de la operación
 			print(resultado);
 			
 			habilitarBotones(true);
