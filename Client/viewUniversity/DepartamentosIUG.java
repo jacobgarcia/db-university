@@ -278,7 +278,7 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 				conexion.establecerConexion();
 
 				//2) Enviar transacción (En este caso, ConsultarProfesor)
-				conexion.enviarDatos("NOMBRE_DEPARTAMENTO");
+				conexion.enviarDatos("NOMBRE");
 				conexion.enviarDatos(nombre);
 
 				//3) Recibir datos de la transacción
@@ -298,7 +298,7 @@ public class DepartamentosIUG extends JFrame implements ActionListener
 				conexion.establecerConexion();
 
 				//2) Enviar transacción (En este caso, ConsultarProfesor)
-				conexion.enviarDatos("DEPARTAMENTO");
+				conexion.enviarDatos("DEPARTAMENTO_DEPARTAMENTO");
 				conexion.enviarDatos(numeroDepto);
 
 				//3) Recibir datos de la transacción

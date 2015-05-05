@@ -264,7 +264,7 @@ public class ProfesoresGUI extends JFrame implements ActionListener
 				conexion.establecerConexion();
 
 				//2) Enviar transacción (En este caso, ConsultarProfesor)
-				conexion.enviarDatos("DEPARTAMENTO");
+				conexion.enviarDatos("DEPARTAMENTO_PROFESOR");
 				conexion.enviarDatos(ndepto);				
 
 				//3) Recibir datos de la transacción
